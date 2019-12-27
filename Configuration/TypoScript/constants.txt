@@ -1,0 +1,51 @@
+
+############################
+### CUSTOM SUBCATEGORIES ###
+###########################
+# customsubcategory=100=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:TemplatePath
+# customsubcategory=160=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:MailConfiguration
+# customsubcategory=170=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:CommentConfiguration
+# customsubcategory=180=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:CssJsIncludation
+# customsubcategory=200=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:mainConfiguration
+
+plugin.tx_nscomments{
+	view {
+		# cat=plugin.tx_nscomments/100; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:ns_comments/Resources/Private/Templates/
+		# cat=plugin.tx_nscomments/100; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:ns_comments/Resources/Private/Partials/
+		# cat=plugin.tx_nscomments/100; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:ns_comments/Resources/Private/Layouts/
+	}
+
+	settings {
+		# cat=plugin.tx_nscomments/180; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addstyleCss
+		StyleCss = EXT:ns_comments/Resources/Public/css/style.css
+		# cat=plugin.tx_nscomments/180; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addfontAwesomeCss
+		FontAwesomeCss = EXT:ns_comments/Resources/Public/css/font-awesome.min.css
+		# cat=plugin.tx_nscomments/180; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addCustomJS
+		CustomJS = EXT:ns_comments/Resources/Public/js/custom.js
+		# cat=plugin.tx_nscomments/180; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addjqueryMinJS
+		Minjs = EXT:ns_comments/Resources/Public/js/jquery-2.2.4.min.js
+
+		# cat=plugin.tx_nscomments/170/10; type=boolean; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsRequired
+		termsRequired = 0
+
+		# cat=plugin.tx_nscomments/170/10; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsTypolinkParameter
+		termsTypolinkParameter = https://www.nitsan.in/
+
+		mainConfiguration {
+			# cat=plugin.tx_nscomments/200/10; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:recordStoragePage
+			recordStoragePage = 
+
+			# cat=plugin.tx_nscomments/200/20; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customDateFormat
+			customDateFormat = F j, Y
+
+			# cat=plugin.tx_nscomments/200/30; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customTimeFormat
+			customTimeFormat = g:i a
+
+			# cat=plugin.tx_nscomments/200/40; type=boolean; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:disableCaptcha
+			disableCaptcha = 1
+		}
+	}
+}

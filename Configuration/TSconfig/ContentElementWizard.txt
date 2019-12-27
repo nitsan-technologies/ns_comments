@@ -1,0 +1,14 @@
+mod.wizards.newContentElement.wizardItems.plugins {
+	elements{
+		ns_comments{
+			icon = ../typo3conf/ext/ns_comments/Resources/Public/Icons/plug_comment.svg
+			iconIdentifier = ext-ns-comment-icon
+			title = LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:comment
+			description = LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:comment.description
+			tt_content_defValues{
+				CType = list
+				list_type = nscomments_comment
+			}
+		}
+	}
+}

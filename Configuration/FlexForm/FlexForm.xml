@@ -1,0 +1,112 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<!--
+			################################
+			  SHEET General Settings
+			################################
+		-->
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.setting</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.custom>
+						<TCEforms>
+							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.custom</label>
+		                    <onChange>reload</onChange>
+		                    <config>
+		                        <type>check</type>
+		                    </config>
+		                 </TCEforms>
+					</settings.custom>
+					<settings.customdate>
+						<TCEforms>
+							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.customdate</label>
+							<displayCond>FIELD:settings.custom:=:1</displayCond>
+		                    <config>
+		                        <type>input</type>
+		                        <eval>trim,required</eval>
+		                    </config>
+		                </TCEforms>
+					</settings.customdate>
+					<settings.customtime>
+						<TCEforms>
+							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.customtime</label>
+							<displayCond>FIELD:settings.custom:=:1</displayCond>
+		                    <config>
+		                        <type>input</type>
+		                        <eval>trim,required</eval>
+		                    </config>
+		                </TCEforms>
+					</settings.customtime>
+					<settings.dateFormat>
+						<TCEforms>
+							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat</label>
+							<displayCond>FIELD:settings.custom:!=:1</displayCond>
+		                    <config>
+		                        <type>radio</type>
+								<items>
+									<numIndex index="0">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat.0</numIndex>
+									  <numIndex index="1">F j, Y</numIndex>
+									</numIndex>
+									<numIndex index="1">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat.1</numIndex>
+									  <numIndex index="1">Y-m-d</numIndex>
+									</numIndex>
+									<numIndex index="2">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat.2</numIndex>
+									  <numIndex index="1">m/d/Y</numIndex>
+									</numIndex>
+									<numIndex index="3">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat.3</numIndex>
+									  <numIndex index="1">d/m/Y</numIndex>
+									</numIndex>
+								</items>
+								<default>F j, Y</default>
+	                    	</config>
+	                    </TCEforms>
+					</settings.dateFormat>
+					<settings.timeFormat>
+						<TCEforms>
+							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.timeFormat</label>
+							<displayCond>FIELD:settings.custom:!=:1</displayCond>
+		                    <config>
+		                        <type>radio</type>
+								<items>
+									<numIndex index="0">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.timeFormat.0</numIndex>
+									  <numIndex index="1">g:i a</numIndex>
+									</numIndex>
+									<numIndex index="1">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.timeFormat.1</numIndex>
+									  <numIndex index="1">g:i A</numIndex>
+									</numIndex>
+									<numIndex index="2">
+									  <numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.timeFormat.2</numIndex>
+									  <numIndex index="1">H:i</numIndex>
+									</numIndex>
+								</items>
+								<default>g:i a</default>
+		                    </config>
+		                </TCEforms>
+					</settings.timeFormat>
+					<settings.captcha>
+						<TCEforms>
+							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.captcha</label>
+		                    <config>
+		                        <type>check</type>
+		                        <default>1</default>
+		                    </config>
+		                 </TCEforms>
+					</settings.captcha>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

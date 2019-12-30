@@ -35,9 +35,6 @@ plugin.tx_nscomments{
 		termsTypolinkParameter = https://www.nitsan.in/
 
 		mainConfiguration {
-			# cat=plugin.tx_nscomments/200/10; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:recordStoragePage
-			recordStoragePage = 
-
 			# cat=plugin.tx_nscomments/200/20; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customDateFormat
 			customDateFormat = F j, Y
 

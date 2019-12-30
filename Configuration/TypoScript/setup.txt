@@ -8,7 +8,6 @@ plugin.tx_nscomments {
 		termsRequired = {$plugin.tx_nscomments.settings.termsRequired}
 		termsTypolinkParameter = {$plugin.tx_nscomments.settings.termsTypolinkParameter}
 		mainConfiguration {
-			recordStoragePage = {$plugin.tx_nscomments.settings.mainConfiguration.recordStoragePage}
 			customDateFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customDateFormat}
 			customTimeFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customTimeFormat}
 			disableCaptcha = {$plugin.tx_nscomments.settings.mainConfiguration.disableCaptcha}

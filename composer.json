@@ -1,13 +1,15 @@
 {
   "name": "nitsan/ns-comments",
   "type": "typo3-cms-extension",
-  "description": "Plug-n-play TYPO3 extension to integrate feature-rich comments features anywhere to your TYPO3 site. This extension includes features like post comment, reply to comment, multi-level comment thread, admin moderation etc., Demo: https://demo.t3terminal.com/t3t-extensions/ You can download PRO version for more-features & free-support at https://t3terminal.com/comments-typo3-plugin-pro/",
+  "description": "Plug-n-play TYPO3 extension to integrate feature-rich comments features anywhere to your TYPO3 site. This extension includes features like post comment, reply to comment, multi-level comment thread, admin moderation etc., Demo: https://demo.t3terminal.com/t3t-extensions/general-utility/comments/ You can download PRO version for more-features & free-support at https://t3terminal.com/comment-plugin-typo3-pages-pro/",
   "homepage": "https://extensions.typo3.org/extension/ns_comments/",
   "license": "GPL-2.0+",
   "keywords": [
     "TYPO3 CMS",
     "Comments",
-    "NITSAN"
+    "Blog",
+    "NITSAN",
+    "News"
   ],
   "support": {
     "issues": "https://github.com/nitsan-technologies/ns_comments/issues"

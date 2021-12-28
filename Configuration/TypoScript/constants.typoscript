@@ -26,7 +26,7 @@ plugin.tx_nscomments{
 		# cat=plugin.tx_nscomments/180; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addCustomJS
 		CustomJS = EXT:ns_comments/Resources/Public/js/custom.js
 		# cat=plugin.tx_nscomments/180; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addjqueryMinJS
-		Minjs = EXT:ns_comments/Resources/Public/js/jquery-2.2.4.min.js
+		Minjs = EXT:ns_comments/Resources/Public/js/jquery-3.6.0.min.js
 
 		# cat=plugin.tx_nscomments/170/10; type=boolean; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsRequired
 		termsRequired = 0

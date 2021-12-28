@@ -3,15 +3,20 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
+if (version_compare(TYPO3_branch, '10.0', '>=')) {
+    $moduleClass = \Nitsan\NsComments\Controller\CommentController::class;
+} else {
+    $moduleClass = 'Comment';
+}
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Nitsan.ns_comments',
     'Comment',
     [
-        'Comment' => 'list, new, create, approveComment',
+        $moduleClass => 'list, new, create, approveComment',
     ],
     // non-cacheable actions
     [
-        'Comment' => 'list, new, create, approveComment',
+        $moduleClass => 'list, new, create, approveComment',
     ]
 );
 

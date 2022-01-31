@@ -219,6 +219,15 @@
 			<trans-unit id="termsTypolinkParameter">
 				<source>Terms typolink parameter</source>
 			</trans-unit>
+			<trans-unit id="flexform.languageFallbackMode">
+				<source>Language Fallback</source>
+			</trans-unit>
+			<trans-unit id="flexform.languageFallbackMode.strict">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="flexform.languageFallbackMode.translated">
+				<source>Language based comments</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

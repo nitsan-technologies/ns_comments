@@ -140,7 +140,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $pid = $GLOBALS['TSFE']->id;
         $setting = $this->settings;
         if ($pid) {
-            $comments = $this->commentRepository->getCommentsByPage($pid)->toArray();
+            $comments = $this->commentRepository->getCommentsByPage($pid,$setting['commnetlanguageFallbackMode'])->toArray();
             if (version_compare(TYPO3_branch, '9.0', '>')) {
                 $path = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/captcha.php';
                 $verification = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/verify.php';

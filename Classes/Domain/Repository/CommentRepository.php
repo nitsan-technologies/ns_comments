@@ -25,7 +25,7 @@ namespace Nitsan\NsComments\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * The repository for Comments
  */
@@ -36,14 +36,23 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param $pageId
      */
-    public function getCommentsByPage($pageId)
+    public function getCommentsByPage($pageId, $mode)
     {
+        if (version_compare(TYPO3_branch, '9.0', '>')) {
+            $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+            $languageid = $context->getPropertyFromAspect('language', 'id');
+        } else {
+            $languageid = $GLOBALS['TSFE']->sys_language_uid;
+        }
         $query = $this->createQuery();
-        $queryArr = [];
         $queryArr = [
             $query->equals('pageuid', $pageId),
             $query->equals('comment', 0),
         ];
+        if ($mode > 0) {
+            $query->getQuerySettings()->setRespectSysLanguage(false);
+            $queryArr[] = $query->equals('sys_language_uid', $languageid);
+        }
         $query->matching($query->logicalAnd($queryArr));
         $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
         $query->getQuerySettings()->setRespectStoragePage(false);

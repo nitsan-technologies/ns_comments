@@ -84,6 +84,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // Storage page configuration
         $this->pageUid = $GLOBALS['TSFE']->id;
         $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] = isset($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) ? $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] : '';
         if ($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) {
             if ($this->settings['mainConfiguration']['recordStoragePage']) {
                 $currentPid['persistence']['storagePid'] = $_REQUEST['tx_nscomments_comment']['comments-storage-pid'];
@@ -94,6 +95,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             if (empty($extbaseFrameworkConfiguration['persistence']['storagePid'])) {
                 if ($_REQUEST['tx_nscomments_comment']) {
+                    $_REQUEST['tx_nscomments_comment']['Storagepid'] = isset($_REQUEST['tx_nscomments_comment']['Storagepid']) ? $_REQUEST['tx_nscomments_comment']['Storagepid'] : '';
                     $currentPid['persistence']['storagePid'] = $_REQUEST['tx_nscomments_comment']['Storagepid'];
                 } else {
                     if ($this->settings['relatedComments'] && $this->settings['mainConfiguration']['recordStoragePage']) {
@@ -114,6 +116,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function listAction()
     {
+        $this->settings['relatedComments'] = isset($this->settings['relatedComments']) ? $this->settings['relatedComments'] : '';
         $relatedComments = $this->settings['relatedComments'];
         if ($relatedComments) {
             $this->settings['custom'] = false;
@@ -129,6 +132,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $Image = $this->settings['mainConfiguration']['userImage'];
             $this->view->assign('relatedComments', true);
         } else {
+            $this->settings['usrimage'] = isset($this->settings['usrimage']) ? $this->settings['usrimage'] : '';
             $imageUid = $this->settings['usrimage'];
             if (!empty($imageUid)) {
                 $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
@@ -149,6 +153,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $verification = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/verify.php';
             }
             $captcha_path = $path . '?' . rand();
+            $Image = isset($Image) ? $Image : '';
             $this->view->assign('captcha_path', $captcha_path);
             $this->view->assign('verification', $verification);
             $this->view->assign('comments', $comments);
@@ -222,6 +227,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
         // Configuration for mail template
         $pageTitle = $GLOBALS['TSFE']->page['title'];
+        $accessTokenLink = isset($accessTokenLink) ? $accessTokenLink : '';
         $translateArguments = ['comments' => $newComment, 'pageTitle' => $pageTitle, 'accessTokenLink' => $accessTokenLink];
         $variables = ['UserData' => $translateArguments];
 

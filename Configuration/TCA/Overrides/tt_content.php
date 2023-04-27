@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3') or die();
 
 $_EXTKEY = 'ns_comments';
 
@@ -7,7 +7,7 @@ $_EXTKEY = 'ns_comments';
  * Plugin
  */
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'Nitsan.' . $_EXTKEY,
+    $_EXTKEY,
     'Comment',
     'Comment'
 );

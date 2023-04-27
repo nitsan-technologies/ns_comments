@@ -174,6 +174,9 @@
 			<trans-unit id="flexform.userSettings">
 				<source>Comment user settings</source>
 			</trans-unit>
+			<trans-unit id="flexform.commnetlanguageFallbackMode">
+				<source>Language based comments</source>
+			</trans-unit>
 			<trans-unit id="sendMailToAdmin">
 				<source>Enable Mail: Enable Email to Admin</source>
 			</trans-unit>

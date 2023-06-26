@@ -154,7 +154,7 @@
 				<target>Benutzerdefiniertes Datumsformat (E.g: d-M-Y // D,m,Y // d/m/Y ...)</target>
 			</trans-unit>
 			<trans-unit id="flexform.customtime">
-				<target>Benutzerdefiniertes Zeitformat (E.g: h:i , h:i:s a , h:i:s p....)</target>
+				<target>Benutzerdefiniertes Zeitformat (E.g: h:i , h:i:s a , h:i:s P....)</target>
 			</trans-unit>
 			<trans-unit id="flexform.CommentUserImage">
 				<target>Standardkommentar Benutzerbild</target>

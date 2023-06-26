@@ -6,7 +6,7 @@
     <div class="comment-avatar">
         <f:if condition="{comment.userimage}">
             <f:then>
-                <img src="{comment.userimage}" alt="User Image" />
+                <f:image src="{comment.userimage}" alt="User Image" />
             </f:then>
             <f:else>
                 <f:render section="DefaultImage" arguments="{_all}"/>

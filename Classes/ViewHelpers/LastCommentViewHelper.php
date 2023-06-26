@@ -1,7 +1,8 @@
 <?php
+
 namespace Nitsan\NsComments\ViewHelpers;
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  *  Get last comment of page record

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:tx_nscomments_domain_model_comment',
@@ -11,7 +12,6 @@ return [
         'dividers2tabs' => true,
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'default_sortby' => 'ORDER BY uid DESC',
         'delete' => 'deleted',
@@ -22,9 +22,9 @@ return [
         ],
         'searchFields' => 'description,pageuid,username,usermail,childcomment',
         'iconfile' => 'EXT:ns_comments/Resources/Public/Icons/plug_comment.svg',
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, pageuid, username, usermail, paramlink, description,childcomment, terms',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         '1' => ['showitem' => 'pageuid, feuserid, accesstoken, username, usermail, userimage, description, terms, paramlink, childcomment, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, sys_language_uid, l10n_parent, l10n_diffsource, hidden, starttime, endtime'],
@@ -32,19 +32,9 @@ return [
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ],
-                ],
-                'default' => 0,
+                'type' => 'language',
             ],
         ],
         'l10n_parent' => [
@@ -55,7 +45,10 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0],
+                    [
+                        'label' => '',
+                        'value' => 0,
+                    ],
                 ],
                 'foreign_table' => 'tx_nscomments_domain_model_comment',
                 'foreign_table_where' => 'AND tx_nscomments_domain_model_comment.pid=###CURRENT_PID### AND tx_nscomments_domain_model_comment.sys_language_uid IN (-1,0)',
@@ -124,7 +117,6 @@ return [
                 'size' => 30,
                 'readOnly' => 1,
                 'eval' => 'trim',
-                'readOnly' => 1,
             ],
         ],
 
@@ -136,7 +128,6 @@ return [
                 'size' => 30,
                 'readOnly' => 1,
                 'eval' => 'trim',
-                'readOnly' => 1,
             ],
         ],
 
@@ -148,7 +139,6 @@ return [
                 'size' => 30,
                 'readOnly' => 1,
                 'eval' => 'trim',
-                'readOnly' => 1,
             ],
         ],
 
@@ -255,7 +245,9 @@ return [
                 'appearance' => [
                     'collapseAll' => true,
                     'newRecordLinkPosition' => 'none',
-                    'levelLinksPosition' => 'none',
+                    'showAllLocalizationLink' => false,
+                    'showSynchronizationLink' => false,
+                    'showNewRecordLink' => false,
                     'useSortable' => false,
                     'enabledControls' => [
                         'new' => false,

@@ -1,11 +1,12 @@
 <?php
+
 namespace Nitsan\NsComments\Domain\Repository;
 
 /***************************************************************
  *
  *  Copyright notice
  *
- *  (c) 2016
+ *  (c) 2023
  *
  *  All rights reserved
  *
@@ -26,17 +27,18 @@ namespace Nitsan\NsComments\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * The repository for Comments
  */
 class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-
     /**
-     *
      * @param $pageId
+     * @param $mode
+     * @return array|object[]|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function getCommentsByPage($pageId, $mode)
+    public function getCommentsByPage($pageId, $mode): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
     {
         $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $languageid = $context->getPropertyFromAspect('language', 'id');
@@ -64,11 +66,12 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $result;
     }
 
+
     /**
-     *
      * @param $pageuid
+     * @return array|object[]|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function getLastCommentOfPage($pageuid = null)
+    public function getLastCommentOfPage($pageuid = null): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
     {
         $query = $this->createQuery();
         $query->matching(

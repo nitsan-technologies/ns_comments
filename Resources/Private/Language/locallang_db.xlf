@@ -154,7 +154,7 @@
 				<source>Custom Date Format (E.g: d-M-Y // D,m,Y // d/m/Y ...)</source>
 			</trans-unit>
 			<trans-unit id="flexform.customtime">
-				<source>Custom Time Format (E.g: h:i , h:i:s a , h:i:s p....)</source>
+				<source>Custom Time Format (E.g: h:i , h:i:s a , h:i:s P....)</source>
 			</trans-unit>
 			<trans-unit id="flexform.CommentUserImage">
 				<source>Default Comment User Image</source>

@@ -193,7 +193,7 @@
 				<target>Format date personnalisé (E.g: d-M-Y // D,m,Y // d/m/Y ...)</target>
 			</trans-unit>
 			<trans-unit id="flexform.customtime">
-				<source>Custom Time Format (E.g: h:i , h:i:s a , h:i:s p....)</source>
+				<source>Custom Time Format (E.g: h:i , h:i:s a , h:i:s P....)</source>
 				<target>Format heure personnalisé (E.g: h:i , h:i:s a , h:i:s p....)</target>
 			</trans-unit>
 			<trans-unit id="flexform.CommentUserImage">

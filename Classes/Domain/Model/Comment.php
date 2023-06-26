@@ -1,11 +1,12 @@
 <?php
+
 namespace Nitsan\NsComments\Domain\Model;
 
 /***************************************************************
  *
  *  Copyright notice
  *
- *  (c) 2016
+ *  (c) 2023
  *
  *  All rights reserved
  *
@@ -31,12 +32,14 @@ namespace Nitsan\NsComments\Domain\Model;
  */
 class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
     /**
-     * _languageUid
-     * @var int
+     * @var int<-1, max>|null The uid of the language of the object. This is the id of the corresponding sing language.
+     *
+     * @internal
+     * @todo make private in 13.0 and expose value via getter
      */
     protected int|null $_languageUid = null;
+
 
     /**
      * crdate as unix timestamp
@@ -48,7 +51,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * hidden
      *
-     * @var bool
+     * @var int
      */
     protected $hidden = 0;
 
@@ -192,7 +195,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the feuserid
      *
-     * @return string $feuserid
+     * @return int $feuserid
      */
     public function getFeuserid()
     {
@@ -202,7 +205,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the feuserid
      *
-     * @param string $feuserid
+     * @param int $feuserid
      * @return void
      */
     public function setFeuserid($feuserid)
@@ -339,7 +342,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the hidden
      *
-     * @return bool $hidden
+     * @return int $hidden
      */
     public function getHidden()
     {
@@ -349,7 +352,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the hidden
      *
-     * @param bool $hidden
+     * @param int $hidden
      * @return void
      */
     public function setHidden($hidden)

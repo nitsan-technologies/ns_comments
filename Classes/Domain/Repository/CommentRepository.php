@@ -1,11 +1,12 @@
 <?php
+
 namespace Nitsan\NsComments\Domain\Repository;
 
 /***************************************************************
  *
  *  Copyright notice
  *
- *  (c) 2016
+ *  (c) 2023
  *
  *  All rights reserved
  *
@@ -26,74 +27,58 @@ namespace Nitsan\NsComments\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * The repository for Comments
  */
 class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-
     /**
-     *
      * @param $pageId
+     * @param $mode
+     * @return array|object[]|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function getCommentsByPage($pageId, $mode)
+    public function getCommentsByPage($pageId, $mode): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
     {
-        if (version_compare(TYPO3_branch, '9.0', '>')) {
-            $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-            $languageid = $context->getPropertyFromAspect('language', 'id');
-        } else {
-            $languageid = $GLOBALS['TSFE']->sys_language_uid;
-        }
+        $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $languageid = $context->getPropertyFromAspect('language', 'id');
         $query = $this->createQuery();
-        $queryArr = [
-            $query->equals('pageuid', $pageId),
-            $query->equals('comment', 0),
-        ];
         if ($mode > 0) {
             $query->getQuerySettings()->setRespectSysLanguage(false);
-            $queryArr[] = $query->equals('sys_language_uid', $languageid);
+            $query->matching(
+                $query->logicalAnd(
+                    $query->equals('pageuid', $pageId),
+                    $query->equals('comment', 0),
+                    $query->equals('sys_language_uid', $languageid)
+                )
+            );
+        } else {
+            $query->matching(
+                $query->logicalAnd(
+                    $query->equals('pageuid', $pageId),
+                    $query->equals('comment', 0)
+                )
+            );
         }
-        $query->matching($query->logicalAnd($queryArr));
         $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
         $query->getQuerySettings()->setRespectStoragePage(false);
         $result = $query->execute();
         return $result;
     }
 
-    /**
-     *
-     * @param $accesstoken
-     */
-    public function getCommentsByAccesstoken($accesstoken)
-    {
-        $query = $this->createQuery();
-        $queryArr = [];
-        $queryArr = [
-            $query->equals('accesstoken', $accesstoken),
-        ];
-
-        // Here you enable the hidden and deleted Records
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-        $query->getQuerySettings()->setRespectStoragePage(false);
-
-        $query->matching($query->logicalAnd($queryArr));
-        $result = $query->execute();
-        return $result;
-    }
 
     /**
-     *
      * @param $pageuid
+     * @return array|object[]|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function getLastCommentOfPage($pageuid = null)
+    public function getLastCommentOfPage($pageuid = null): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
     {
         $query = $this->createQuery();
-        $queryArr =[];
-        $queryArr = [
-            $query->equals('pageuid', $pageuid),
-        ];
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->matching($query->logicalAnd($queryArr));
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('pageuid', $pageuid),
+            )
+        );
         $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
         $result = $query->setLimit(1)->execute();
         return $result;

@@ -34,6 +34,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    protected $pageUid;
 
     /**
      * commentRepository

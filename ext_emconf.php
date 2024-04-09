@@ -1,17 +1,19 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
-    'title' => '[NITSAN] Comments for TYPO3 Pages',
-    'description' => 'Plug-n-play TYPO3 extension to integrate feature-rich comments features anywhere to your TYPO3 site. This extension includes features like post comment, reply to comment, multi-level comment thread, admin moderation etc., Live-Demo: https://demo.t3planet.com/t3t-extensions/comments You can download PRO version for more-features & free-support at https://t3planet.com/typo3-comment-extension-typo3-pages-pro',
+$EM_CONF['ns_comments'] = [
+    'title' => 'Pages Comment',
+    'description' => 'The TYPO3 Comment Extension simplifies the process for visitors to leave comments on your website\'s published pages. It utilizes nested comments to create a user-friendly experience. Admins receive email notifications, allowing them to easily manage comments either through email or the backend.
+
+    *** Live Demo: https://demo.t3planet.com/t3-extensions/comments/ *** Premium Version, Documentation & Free Support: https://t3planet.com/typo3-page-comment-extension',
     'category' => 'plugin',
-    'author' => 'Team NITSAN',
+    'author' => 'T3: Himanshu Ramavat, T3: Nilesh Malankiya, QA: Krishna Dhapa',
     'author_email' => 'sanjay@nitsan.in',
-    'author_company' => 'NITSAN Technologies Pvt Ltd',
+    'author_company' => 'T3Planet // NITSAN',
     'state' => 'stable',
     'internal' => '',
     'uploadfolder' => '0',
     'createDirs' => '',
-    'version' => '12.0.0',
+    'version' => '12.0.1',
     'constraints' => [
         'depends' => [
             'typo3' => '12.0.0-12.4.99',

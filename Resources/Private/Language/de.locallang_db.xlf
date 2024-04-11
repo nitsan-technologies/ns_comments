@@ -44,7 +44,7 @@
 			</trans-unit>
 			<trans-unit id="tx_comment_domain_model_rating.crdate">
 				<target>Erstellungsdatum</target>
-			</trans-unit>			
+			</trans-unit>
 			<trans-unit id="TemplatePath">
 				<target>Vorlagenpfad</target>
 			</trans-unit>
@@ -219,6 +219,11 @@
 			<trans-unit id="termsTypolinkParameter">
 				<target>Bedingungen typolink parameter</target>
 			</trans-unit>
+			<trans-unit id="termsText">
+				<source>Terms Text</source>
+				<target>Begriffe Text</target>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

@@ -44,7 +44,7 @@
 			</trans-unit>
 			<trans-unit id="tx_comment_domain_model_rating.crdate">
 				<source>Created Date</source>
-			</trans-unit>			
+			</trans-unit>
 			<trans-unit id="TemplatePath">
 				<source>Template Path</source>
 			</trans-unit>
@@ -231,6 +231,10 @@
 			<trans-unit id="flexform.languageFallbackMode.translated">
 				<source>Language based comments</source>
 			</trans-unit>
+			<trans-unit id="termsText">
+				<source>Terms Text</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

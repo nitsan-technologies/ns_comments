@@ -280,6 +280,11 @@
 				<source>Terms typolink parameter</source>
 				<target>Paramètre typolink des conditions</target>
 			</trans-unit>
-		</body>
+            <trans-unit id="termsText">
+                <source>Terms Text</source>
+                <target>Texte des conditions</target>
+            </trans-unit>
+
+        </body>
 	</file>
 </xliff>

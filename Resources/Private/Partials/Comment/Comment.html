@@ -4,14 +4,7 @@
         <div class="ns-alert ns-alert-success"><f:translate key="form.thankyouMessage"/></div>
     </div>
     <div class="comment-avatar">
-        <f:if condition="{comment.userimage}">
-            <f:then>
-                <f:image src="{comment.userimage}" alt="User Image" />
-            </f:then>
-            <f:else>
-                <f:render section="DefaultImage" arguments="{_all}"/>
-            </f:else>
-        </f:if>
+        <f:image src="EXT:ns_comments/Resources/Public/Icons/user-icon.png" alt="user" height="100" width="100c"/>
     </div>
 
     <!-- Comment -->
@@ -20,7 +13,7 @@
             <div class="comment-author">
                 <strong>{comment.username}</strong>
                 <span class="text-muted">
-                    <f:if condition="{settings.custom}">
+                    <f:if condition="{settings.custom} && {settings.customdate} && {comment.customdate}">
                         <f:then>
                             <f:format.date format="{settings.customdate}">{comment.crdate}</f:format.date> <f:translate key='at'/> <f:format.date format="{settings.customtime}">{comment.crdate}</f:format.date>
                         </f:then>
@@ -59,14 +52,3 @@
         </ul>
     </f:for>
 </f:if>
-
-<f:section name="DefaultImage">
-    <f:if condition="{Image}">
-        <f:then>
-            <f:image src="{f:if(condition: relatedComments, then: Image, else: Image.uid)}"  treatIdAsReference="{f:if(condition: relatedComments, then: 'FALSE', else: 'TRUE')}" alt="{Image.title}" height="100" width="100c" />
-        </f:then>
-        <f:else>
-            <f:image src="EXT:ns_comments/Resources/Public/Icons/user-icon.png" alt="user" height="100" width="100c"/>
-        </f:else>
-    </f:if>
-</f:section>

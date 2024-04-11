@@ -29,16 +29,18 @@ namespace Nitsan\NsComments\Controller;
 use Nitsan\NsComments\Domain\Model\Comment;
 use Nitsan\NsComments\Domain\Repository\CommentRepository;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * CommentController
  */
-class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class CommentController extends ActionController
 {
     protected $pageUid;
 
@@ -90,7 +92,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         // Storage page configuration
         $this->pageUid = $GLOBALS['TSFE']->id;
-        $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] = isset($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) ? $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] : '';
         if ($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) {
             if ($this->settings['mainConfiguration']['recordStoragePage']) {
@@ -130,22 +132,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->settings['dateFormat'] = $this->settings['mainConfiguration']['customDateFormat'];
             $this->settings['timeFormat'] = $this->settings['mainConfiguration']['customTimeFormat'];
             $this->settings['captcha'] = $this->settings['mainConfiguration']['disableCaptcha'];
-            if ($this->settings['mainConfiguration']['commentUserSettings'] == 'feuserOnly') {
-                $this->settings['userSettings'] = $this->settings['mainConfiguration']['commentUserSettings'];
-                $this->settings['feUserloginpid'] = $this->settings['mainConfiguration']['FEUserLoginPageId'];
-            } else {
-                $this->settings['userSettings'] = $this->settings['mainConfiguration']['commentUserSettings'];
-            }
-            $image = $this->settings['mainConfiguration']['userImage'];
             $this->view->assign('relatedComments', true);
-        } else {
-            $this->settings['usrimage'] = isset($this->settings['usrimage']) ? $this->settings['usrimage'] : '';
-            $imageUid = $this->settings['usrimage'];
-            if (!empty($imageUid)) {
-                $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-                $fileReference = $resourceFactory->getFileReferenceObject($imageUid);
-                $image = $fileReference->getProperties();
-            }
         }
 
         $pid = $GLOBALS['TSFE']->id;
@@ -197,7 +184,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->persistenceManager->persistAll();
 
         // Add paramlink to comments for scrolling to comment
-        $paramlink = $this->buildUriByUid($this->pageUid, $arguments = ['commentid' => $newComment->getUid()]);
+        $paramlink = $this->buildUriByUid($this->pageUid, ['commentid' => $newComment->getUid()]);
         $newComment->setParamlink($paramlink);
         $this->commentRepository->update($newComment);
 
@@ -239,11 +226,11 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $paths = [];
         if (version_compare(TYPO3_branch, '9.0', '>')) {
-            $paths['captcha'] = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/captcha.php';
-            $paths['verification'] = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/verify.php';
+            $paths['captcha'] = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/captcha.php';
+            $paths['verification'] = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/verify.php';
         } else {
-            $paths['captcha'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/captcha.php';
-            $paths['verification'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/verify.php';
+            $paths['captcha'] = ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/captcha.php';
+            $paths['verification'] = ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/verify.php';
         }
         return $paths;
     }

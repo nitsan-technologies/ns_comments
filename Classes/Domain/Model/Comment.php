@@ -121,7 +121,7 @@ class Comment extends AbstractEntity
     /**
      * childcomment
      *
-     * @var ObjectStorage<Comment>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Nitsan\NsComments\Domain\Model\Comment>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $childcomment = null;
@@ -378,18 +378,6 @@ class Comment extends AbstractEntity
      */
     public function setDescription($description)
     {
-        $description = trim($description);
-
-        $threeNewLines = "\r\n\r\n\r\n";
-        $twoNewLines = "\r\n\r\n";
-        do {
-            $description = str_replace($threeNewLines, $twoNewLines, $description);
-        } while (strstr($description, $threeNewLines));
-
-        // Decode html tags
-        $description = htmlspecialchars($description);
-        $description = preg_replace('/(((http(s)?\:\/\/)|(www\.))([^\s]+[^\.\s]+))/', '<a href="http$4://$5$6">$1</a>', $description);
-
         $this->description = $description;
     }
     /**
@@ -417,7 +405,7 @@ class Comment extends AbstractEntity
     /**
      * Adds a Comment
      *
-     * @param Comment $childcomment
+     * @param \Nitsan\NsComments\Domain\Model\Comment $childcomment
      * @return void
      */
     public function addChildcomment(self $childcomment)
@@ -428,7 +416,7 @@ class Comment extends AbstractEntity
     /**
      * Removes a Comment
      *
-     * @param Comment $childcommentToRemove The Comment to be removed
+     * @param \Nitsan\NsComments\Domain\Model\Comment $childcommentToRemove The Comment to be removed
      * @return void
      */
     public function removeChildcomment(self $childcommentToRemove)
@@ -439,7 +427,7 @@ class Comment extends AbstractEntity
     /**
      * Returns the childcomment
      *
-     * @return ObjectStorage<Comment> $childcomment
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Nitsan\NsComments\Domain\Model\Comment> $childcomment
      */
     public function getChildcomment()
     {
@@ -449,10 +437,10 @@ class Comment extends AbstractEntity
     /**
      * Sets the childcomment
      *
-     * @param ObjectStorage<Comment> $childcomment
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Nitsan\NsComments\Domain\Model\Comment> $childcomment
      * @return void
      */
-    public function setChildcomment(ObjectStorage $childcomment)
+    public function setChildcomment(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $childcomment)
     {
         $this->childcomment = $childcomment;
     }

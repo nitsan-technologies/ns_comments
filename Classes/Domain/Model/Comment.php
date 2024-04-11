@@ -1,6 +1,9 @@
 <?php
 namespace Nitsan\NsComments\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -29,7 +32,7 @@ namespace Nitsan\NsComments\Domain\Model;
 /**
  * Comment
  */
-class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Comment extends AbstractEntity
 {
 
     /**
@@ -118,7 +121,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * childcomment
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Nitsan\NsComments\Domain\Model\Comment>
+     * @var ObjectStorage<Comment>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $childcomment = null;
@@ -408,13 +411,13 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected function initStorageObjects()
     {
-        $this->childcomment = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->childcomment = new ObjectStorage();
     }
 
     /**
      * Adds a Comment
      *
-     * @param \Nitsan\NsComments\Domain\Model\Comment $childcomment
+     * @param Comment $childcomment
      * @return void
      */
     public function addChildcomment(self $childcomment)
@@ -425,7 +428,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a Comment
      *
-     * @param \Nitsan\NsComments\Domain\Model\Comment $childcommentToRemove The Comment to be removed
+     * @param Comment $childcommentToRemove The Comment to be removed
      * @return void
      */
     public function removeChildcomment(self $childcommentToRemove)
@@ -436,7 +439,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the childcomment
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Nitsan\NsComments\Domain\Model\Comment> $childcomment
+     * @return ObjectStorage<Comment> $childcomment
      */
     public function getChildcomment()
     {
@@ -446,10 +449,10 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the childcomment
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Nitsan\NsComments\Domain\Model\Comment> $childcomment
+     * @param ObjectStorage<Comment> $childcomment
      * @return void
      */
-    public function setChildcomment(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $childcomment)
+    public function setChildcomment(ObjectStorage $childcomment)
     {
         $this->childcomment = $childcomment;
     }

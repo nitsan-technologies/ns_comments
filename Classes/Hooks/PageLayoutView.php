@@ -1,10 +1,11 @@
 <?php
 namespace Nitsan\NsComments\Hooks;
 
+use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class PageLayoutView implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface
+class PageLayoutView implements PageLayoutViewDrawItemHookInterface
 {
     public function preProcess(\TYPO3\CMS\Backend\View\PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
     {
@@ -37,9 +38,9 @@ class PageLayoutView implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHo
     /**
      * @param string $extKey
      * @param string $templateName
-     * @return string the fluid template
+     * @return StandaloneView the fluid template
      */
-    protected function getFluidTemplate($extKey, $templateName)
+    protected function getFluidTemplate($extKey, $templateName): StandaloneView
     {
         // prepare own template
         $fluidTemplateFile = GeneralUtility::getFileAbsFileName('EXT:' . $extKey . '/Resources/Private/Backend/' . $templateName . '.html');

@@ -25,42 +25,50 @@ namespace Nitsan\NsComments\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Resource\ResourceFactory;
+
+use Nitsan\NsComments\Domain\Model\Comment;
+use Nitsan\NsComments\Domain\Repository\CommentRepository;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * CommentController
  */
-class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class CommentController extends ActionController
 {
     protected $pageUid;
 
     /**
      * commentRepository
      *
-     * @var \Nitsan\NsComments\Domain\Repository\CommentRepository
+     * @var CommentRepository
      */
     protected $commentRepository = null;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+     * @var PersistenceManager
      */
     protected $persistenceManager;
 
     /**
      * User Repository
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+     * @var FrontendUserRepository
      */
     protected $userRepository;
 
     /**
      * Inject a news repository to enable DI
      *
-     * @param \Nitsan\NsComments\Domain\Repository\CommentRepository $commentRepository
+     * @param CommentRepository $commentRepository
      */
-    public function injectCommentRepository(\Nitsan\NsComments\Domain\Repository\CommentRepository $commentRepository)
+    public function injectCommentRepository(CommentRepository $commentRepository)
     {
         $this->commentRepository = $commentRepository;
     }
@@ -68,9 +76,9 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * Inject a news repository to enable DI
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     * @param PersistenceManager $persistenceManager
      */
-    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
     {
         $this->persistenceManager = $persistenceManager;
     }
@@ -84,7 +92,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         // Storage page configuration
         $this->pageUid = $GLOBALS['TSFE']->id;
-        $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] = isset($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) ? $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] : '';
         if ($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) {
             if ($this->settings['mainConfiguration']['recordStoragePage']) {
@@ -124,84 +132,38 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->settings['dateFormat'] = $this->settings['mainConfiguration']['customDateFormat'];
             $this->settings['timeFormat'] = $this->settings['mainConfiguration']['customTimeFormat'];
             $this->settings['captcha'] = $this->settings['mainConfiguration']['disableCaptcha'];
-            if ($this->settings['mainConfiguration']['commentUserSettings'] == 'feuserOnly') {
-                $this->settings['userSettings'] = $this->settings['mainConfiguration']['commentUserSettings'];
-                $this->settings['feUserloginpid'] = $this->settings['mainConfiguration']['FEUserLoginPageId'];
-            } else {
-                $this->settings['userSettings'] = $this->settings['mainConfiguration']['commentUserSettings'];
-            }
-            $Image = $this->settings['mainConfiguration']['userImage'];
             $this->view->assign('relatedComments', true);
-        } else {
-            $this->settings['usrimage'] = isset($this->settings['usrimage']) ? $this->settings['usrimage'] : '';
-            $imageUid = $this->settings['usrimage'];
-            if (!empty($imageUid)) {
-                $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-                $fileReference = $resourceFactory->getFileReferenceObject($imageUid);
-                $Image = $fileReference->getProperties();
-            }
         }
 
         $pid = $GLOBALS['TSFE']->id;
         $setting = $this->settings;
         if ($pid) {
             $comments = $this->commentRepository->getCommentsByPage($pid,$setting['commnetlanguageFallbackMode'])->toArray();
-            if (version_compare(TYPO3_branch, '9.0', '>')) {
-                $path = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/captcha.php';
-                $verification = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/verify.php';
-            } else {
-                $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/captcha.php';
-                $verification = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/verify.php';
-            }
-            $captcha_path = $path . '?' . rand();
-            $Image = isset($Image) ? $Image : '';
+            $paths = $this->captchaVerificationPath();
+
+            $captcha_path = $paths['captcha'] . '?' . rand();
+            $image = isset($image) ? $image : '';
             $this->view->assign('captcha_path', $captcha_path);
-            $this->view->assign('verification', $verification);
+            $this->view->assign('verification', $paths['verification']);
             $this->view->assign('comments', $comments);
-            $this->view->assign('Image', $Image);
+            $this->view->assign('Image', $image);
             $this->view->assign('pid', $pid);
             $this->view->assign('settings', $setting);
         } else {
             $error = LocalizationUtility::translate('tx_nscomments_domain_model_comment.errorMessage', 'NsComments');
-            $this->addFlashMessage($error, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        }
-    }
-
-    /**
-     * action approveComment
-     *
-     * @return void
-     */
-    public function approveCommentAction()
-    {
-        if ($_REQUEST['Accesstoken']) {
-            $comment = $this->commentRepository->getCommentsByAccesstoken($_REQUEST['Accesstoken']);
-            if (count($comment) > 0) {
-                $commentData = $comment[0];
-                $commentData->setAccesstoken('');
-                $commentData->setHidden(0);
-                $this->commentRepository->update($commentData);
-                $this->view->assign('updated', 1);
-            }
+            $this->addFlashMessage($error, '', AbstractMessage::ERROR);
         }
     }
 
     /**
      * action create
      *
-     * @param \Nitsan\NsComments\Domain\Model\Comment $newComment
+     * @param Comment $newComment
      *
      * @return void
      */
-    public function createAction(\Nitsan\NsComments\Domain\Model\Comment $newComment)
+    public function createAction(Comment $newComment)
     {
-        if (isset($this->settings['approveComment']) && $this->settings['approveComment'] == 1) {
-            // Access Token
-            $token = bin2hex(random_bytes(11));
-            $newComment->setAccesstoken($token);
-            $accessTokenLink = $this->buildUriForAccesstoken($this->pageUid, $arguments = ['Accesstoken' => $token]);
-        }
-
         $request = $this->request->getArguments();
         $newComment->setCrdate(time());
         if (version_compare(TYPO3_branch, '9.0', '>')) {
@@ -222,26 +184,14 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->persistenceManager->persistAll();
 
         // Add paramlink to comments for scrolling to comment
-        $paramlink = $this->buildUriByUid($this->pageUid, $arguments = ['commentid' => $newComment->getUid()]);
+        $paramlink = $this->buildUriByUid($this->pageUid, ['commentid' => $newComment->getUid()]);
         $newComment->setParamlink($paramlink);
         $this->commentRepository->update($newComment);
 
-        // Configuration for mail template
-        $pageTitle = $GLOBALS['TSFE']->page['title'];
-        $accessTokenLink = isset($accessTokenLink) ? $accessTokenLink : '';
-        $translateArguments = ['comments' => $newComment, 'pageTitle' => $pageTitle, 'accessTokenLink' => $accessTokenLink];
-        $variables = ['UserData' => $translateArguments];
+        $this->persistenceManager->persistAll();
+        $json[$newComment->getUid()] = ['parentId' => $parentId, 'comment' => 'comment'];
+        return json_encode($json);
 
-        // Disable comment for approvement
-        if (isset($this->settings['approveComment']) && $this->settings['approveComment'] == 1) {
-            $newComment->setHidden(1);
-            $json = ['status' => 'success'];
-            return json_encode($json);
-        } else {
-            $this->persistenceManager->persistAll();
-            $json[$newComment->getUid()] = ['parentId' => $parentId, 'comment' => 'comment'];
-            return json_encode($json);
-        }
     }
 
     /**
@@ -251,27 +201,38 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param bool $arguments
      * @return string The link
      */
-    private function buildUriByUid($uid, $arguments = [])
+    private function buildUriByUid($uid, $arguments = []): string
     {
-        $commentid = $arguments['commentid'];
-        $excludeFromQueryString = ['tx_nscomments_comment[action]', 'tx_nscomments_comment[controller]', 'tx_nscomments_comment', 'type'];
-        $uri = $this->uriBuilder->reset()->setTargetPageUid($uid)->setAddQueryString(true)->setArgumentsToBeExcludedFromQueryString($excludeFromQueryString)->setSection('comments-' . $commentid)->build();
-        $uri = $this->addBaseUriIfNecessary($uri);
-        return $uri;
+        $commentId = $arguments['commentid'];
+        $excludeFromQueryString = [
+            'tx_nscomments_comment[action]',
+            'tx_nscomments_comment[controller]',
+            'tx_nscomments_comment',
+            'type'
+        ];
+        $uri = $this->uriBuilder->reset()
+            ->setTargetPageUid($uid)
+            ->setAddQueryString(true)
+            ->setArgumentsToBeExcludedFromQueryString($excludeFromQueryString)
+            ->setSection('comments-' . $commentId)
+            ->build();
+        return $this->addBaseUriIfNecessary($uri);
     }
 
     /**
-     * Returns a built URI by buildUriForAccesstoken
-     *
-     * @param int $uid The uid to use for building link
-     * @param bool $arguments
-     * @return string The link
+     * @return array
      */
-    private function buildUriForAccesstoken($uid, $arguments = [])
+    private function captchaVerificationPath(): array
     {
-        $excludeFromQueryString = ['tx_nscomments_comment[action]', 'tx_nscomments_comment[controller]', 'tx_nscomments_comment', 'type'];
-        $uri = $this->uriBuilder->reset()->setTargetPageUid($uid)->setAddQueryString(true)->setArgumentsToBeExcludedFromQueryString($excludeFromQueryString)->setArguments($arguments)->build();
-        $uri = $this->addBaseUriIfNecessary($uri);
-        return $uri;
+        $paths = [];
+        if (version_compare(TYPO3_branch, '9.0', '>')) {
+            $paths['captcha'] = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/captcha.php';
+            $paths['verification'] = \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath('ns_comments')) . 'Resources/Private/PHP/verify.php';
+        } else {
+            $paths['captcha'] = ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/captcha.php';
+            $paths['verification'] = ExtensionManagementUtility::siteRelPath('ns_comments') . 'Resources/Private/PHP/verify.php';
+        }
+        return $paths;
     }
+
 }

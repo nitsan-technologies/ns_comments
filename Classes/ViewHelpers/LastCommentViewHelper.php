@@ -1,6 +1,7 @@
 <?php
 namespace Nitsan\NsComments\ViewHelpers;
 
+use Nitsan\NsComments\Domain\Repository\CommentRepository;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -11,16 +12,16 @@ class LastCommentViewHelper extends AbstractViewHelper
     /**
      * commentRepository
      *
-     * @var \Nitsan\NsComments\Domain\Repository\CommentRepository
+     * @var CommentRepository
      */
     protected $commentRepository = null;
 
     /**
      * Inject a news repository to enable DI
      *
-     * @param \Nitsan\NsComments\Domain\Repository\CommentRepository $commentRepository
+     * @param CommentRepository $commentRepository
      */
-    public function injectCommentRepository(\Nitsan\NsComments\Domain\Repository\CommentRepository $commentRepository)
+    public function injectCommentRepository(CommentRepository $commentRepository)
     {
         $this->commentRepository = $commentRepository;
     }
@@ -42,10 +43,9 @@ class LastCommentViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $pageuid = $this->arguments['pageuid'];
+        $pageUid = $this->arguments['pageuid'];
 
         // Get last comment of page
-        $pagecommentData = $this->commentRepository->getLastCommentOfPage($pageuid);
-        return $pagecommentData;
+        return $this->commentRepository->getLastCommentOfPage($pageUid);
     }
 }

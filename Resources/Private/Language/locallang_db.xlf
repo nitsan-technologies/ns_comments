@@ -44,7 +44,7 @@
 			</trans-unit>
 			<trans-unit id="tx_comment_domain_model_rating.crdate">
 				<source>Created Date</source>
-			</trans-unit>			
+			</trans-unit>
 			<trans-unit id="TemplatePath">
 				<source>Template Path</source>
 			</trans-unit>
@@ -219,15 +219,19 @@
 			<trans-unit id="termsTypolinkParameter">
 				<source>Terms typolink parameter</source>
 			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode">
+			<trans-unit id="flexform.commnetlanguageFallbackMode">
 				<source>Language Fallback</source>
 			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode.strict">
+			<trans-unit id="flexform.commnetlanguageFallbackMode.strict">
 				<source>Default</source>
 			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode.translated">
+			<trans-unit id="flexform.commnetlanguageFallbackMode.translated">
 				<source>Language based comments</source>
 			</trans-unit>
+			<trans-unit id="termsText">
+				<source>Terms Text</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

@@ -27,7 +27,7 @@ return [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, pageuid, username, usermail, paramlink, description,childcomment, terms',
     ],
     'types' => [
-        '1' => ['showitem' => 'pageuid, feuserid, accesstoken, username, usermail, userimage, description, terms, paramlink, childcomment, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, sys_language_uid, l10n_parent, l10n_diffsource, hidden, starttime, endtime'],
+        '1' => ['showitem' => 'pageuid, username, usermail, description, terms, paramlink, childcomment, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, sys_language_uid, l10n_parent, l10n_diffsource, hidden, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -128,30 +128,6 @@ return [
             ],
         ],
 
-        'feuserid' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:tx_nscomments_domain_model_comment.feuserid',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'readOnly' => 1,
-                'eval' => 'trim',
-                'readOnly' => 1,
-            ],
-        ],
-
-        'accesstoken' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:tx_nscomments_domain_model_comment.accesstoken',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'readOnly' => 1,
-                'eval' => 'trim',
-                'readOnly' => 1,
-            ],
-        ],
-
         'username' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:tx_nscomments_domain_model_comment.username',
@@ -184,16 +160,6 @@ return [
                 ],
                 'readOnly' => 1,
                 'softref' => 'typolink',
-            ],
-        ],
-
-        'userimage' => [
-            'exclude' => 1,
-            'label' => 'LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:tx_nscomments_domain_model_comment.image',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
             ],
         ],
 

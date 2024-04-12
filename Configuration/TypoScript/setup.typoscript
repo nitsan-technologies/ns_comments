@@ -6,6 +6,7 @@ plugin.tx_nscomments {
 	}
 	settings {
 		termsRequired = {$plugin.tx_nscomments.settings.termsRequired}
+		termsText = {$plugin.tx_nscomments.settings.termsText}
 		termsTypolinkParameter = {$plugin.tx_nscomments.settings.termsTypolinkParameter}
 		mainConfiguration {
 			customDateFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customDateFormat}
@@ -74,21 +75,3 @@ lib.tx_nscomments.comments {
     	relatedComments = 1
     }
 }
-
-[globalVar = LIT:1 = {$plugin.tx_nscomments.settings.approveComment}]
-	page.315125 >
-	page.315125 = USER
-	page.315125{
-	  	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-	  	pluginName = Comment
-	  	extensionName = NsComments
-	  	controller = Comment
-	  	vendorName = Nitsan
-	  	action = show
-	  	switchableControllerActions{
-	    	Comment{
-	      		1 = approveComment
-	    	}
-	  	}
-	}
-[global]

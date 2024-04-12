@@ -35,6 +35,3 @@ if (version_compare(TYPO3_branch, '7.0', '>')) {
         }
     }
 }
-
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['ns_comments']
-= \Nitsan\NsComments\Hooks\PageLayoutView::class;

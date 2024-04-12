@@ -26,10 +26,13 @@ namespace Nitsan\NsComments\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * The repository for Comments
  */
-class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class CommentRepository extends Repository
 {
 
     /**
@@ -40,9 +43,9 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         if (version_compare(TYPO3_branch, '9.0', '>')) {
             $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-            $languageid = $context->getPropertyFromAspect('language', 'id');
+            $languageId = $context->getPropertyFromAspect('language', 'id');
         } else {
-            $languageid = $GLOBALS['TSFE']->sys_language_uid;
+            $languageId = $GLOBALS['TSFE']->sys_language_uid;
         }
         $query = $this->createQuery();
         $queryArr = [
@@ -51,34 +54,12 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         ];
         if ($mode > 0) {
             $query->getQuerySettings()->setRespectSysLanguage(false);
-            $queryArr[] = $query->equals('sys_language_uid', $languageid);
+            $queryArr[] = $query->equals('sys_language_uid', $languageId);
         }
         $query->matching($query->logicalAnd($queryArr));
-        $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
+        $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
         $query->getQuerySettings()->setRespectStoragePage(false);
-        $result = $query->execute();
-        return $result;
-    }
-
-    /**
-     *
-     * @param $accesstoken
-     */
-    public function getCommentsByAccesstoken($accesstoken)
-    {
-        $query = $this->createQuery();
-        $queryArr = [];
-        $queryArr = [
-            $query->equals('accesstoken', $accesstoken),
-        ];
-
-        // Here you enable the hidden and deleted Records
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-        $query->getQuerySettings()->setRespectStoragePage(false);
-
-        $query->matching($query->logicalAnd($queryArr));
-        $result = $query->execute();
-        return $result;
+        return $query->execute();
     }
 
     /**
@@ -88,14 +69,12 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function getLastCommentOfPage($pageuid = null)
     {
         $query = $this->createQuery();
-        $queryArr =[];
         $queryArr = [
             $query->equals('pageuid', $pageuid),
         ];
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->matching($query->logicalAnd($queryArr));
-        $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
-        $result = $query->setLimit(1)->execute();
-        return $result;
+        $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
+        return $query->setLimit(1)->execute();
     }
 }

@@ -12,3 +12,5 @@ mod.wizards.newContentElement.wizardItems.plugins {
 		}
 	}
 }
+
+mod.web_layout.tt_content.preview.list.nscomments_comment = EXT:ns_comments/Resources/Private/Backend/Nscomment.html

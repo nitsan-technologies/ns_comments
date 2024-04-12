@@ -219,13 +219,13 @@
 			<trans-unit id="termsTypolinkParameter">
 				<source>Terms typolink parameter</source>
 			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode">
+			<trans-unit id="flexform.commnetlanguageFallbackMode">
 				<source>Language Fallback</source>
 			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode.strict">
+			<trans-unit id="flexform.commnetlanguageFallbackMode.strict">
 				<source>Default</source>
 			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode.translated">
+			<trans-unit id="flexform.commnetlanguageFallbackMode.translated">
 				<source>Language based comments</source>
 			</trans-unit>
 			<trans-unit id="termsText">

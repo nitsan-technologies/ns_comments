@@ -1,5 +1,5 @@
 <f:comment>
-    Care about the Id and Class attibutes value 
+    Care about the Id and Class attibutes value
     It is used for form validation
 </f:comment>
 
@@ -37,7 +37,7 @@
         </f:if>
         <div class="error-msg" id="email_error"><p><f:translate key="email_required" /></p></div>
         <div class="error-msg" id="email_error_msg"><p><f:translate key="form.emailError" /></p></div>
-    </div> 
+    </div>
 </div>
 
 <div class="ns-form-group-main">
@@ -51,7 +51,7 @@
     <div class="ns-form-group-main">
         <div class="ns-form-group">
             <div class="ns-captch">
-                <img src="{captcha_path}" id='captchaimg' alt="Captcha Code" /> <f:translate key="form.captchaRefresh" /> 
+                <img src="{captcha_path}" id='captchaimg' alt="Captcha Code" /> <f:translate key="form.captchaRefresh" />
                 <a href='javascript: refreshCaptcha();' class="captchaLink"><f:translate key="form.captchaRefreshButton" /></a>
             </div>
             <div class="ns-captch-input">
@@ -76,7 +76,15 @@
             <label for="terms" class="ns-form-checkbox">
                 <f:form.checkbox property="terms" id="terms" value="1" />
                 <f:variable name="termsTypolinkParamater" value="{f:uri.typolink(parameter:'{settings.termsTypolinkParameter}')}" />
-                {f:translate(key: 'terms.text', arguments: '{0: "{termsTypolinkParamater}"}') -> f:format.raw()}
+                <f:if condition="{settings.termsText}">
+                    <f:then>
+                        {settings.termsText} {f:translate(key: 'terms.link', arguments: '{0: "{termsTypolinkParamater}"}') -> f:format.raw()}
+                    </f:then>
+                    <f:else>
+                        {f:translate(key: 'terms.text', arguments: '{0: "{termsTypolinkParamater}"}') -> f:format.raw()}
+                    </f:else>
+                </f:if>
+
             </label>
             <div class="error-msg" id="terms_error"><p><f:translate key="terms_required" /></p></div>
             <div class="error-msg" id="terms_error_msg"><p><f:translate key="form.termsError" /></p></div>
@@ -98,7 +106,7 @@
 <f:if condition="feuserImages">
     <f:for each="{feuserImages}" as="feuserimage" iteration="itr">
         <f:if condition="{itr.cycle}==1">
-            <f:form.hidden property="userimage" value="{f:uri.image(src:feuserimage.uid, treatIdAsReference:1)}"/>            
+            <f:form.hidden property="userimage" value="{f:uri.image(src:feuserimage.uid, treatIdAsReference:1)}"/>
         </f:if>
     </f:for>
 </f:if>

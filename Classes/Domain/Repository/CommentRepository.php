@@ -26,22 +26,27 @@ namespace Nitsan\NsComments\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * The repository for Comments
  */
-class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class CommentRepository extends Repository
 {
     /**
      * @param $pageId
      * @param $mode
-     * @return array|object[]|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|object[]|QueryResultInterface
      */
-    public function getCommentsByPage($pageId, $mode): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+    public function getCommentsByPage($pageId, $mode): QueryResultInterface|array
     {
-        $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $languageid = $context->getPropertyFromAspect('language', 'id');
+        $context = GeneralUtility::makeInstance(Context::class);
+        $languageId = $context->getPropertyFromAspect('language', 'id');
         $query = $this->createQuery();
         if ($mode > 0) {
             $query->getQuerySettings()->setRespectSysLanguage(false);
@@ -49,7 +54,7 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $query->logicalAnd(
                     $query->equals('pageuid', $pageId),
                     $query->equals('comment', 0),
-                    $query->equals('sys_language_uid', $languageid)
+                    $query->equals('sys_language_uid', $languageId)
                 )
             );
         } else {
@@ -60,27 +65,26 @@ class CommentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 )
             );
         }
-        $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
+        $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
         $query->getQuerySettings()->setRespectStoragePage(false);
-        $result = $query->execute();
-        return $result;
+        return $query->execute();
     }
 
 
     /**
      * @param $pageuid
-     * @return array|object[]|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|object[]|QueryResultInterface
      */
-    public function getLastCommentOfPage($pageuid = null): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+    public function getLastCommentOfPage($pageuid = null): QueryResultInterface|array
     {
         $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
         $query->matching(
             $query->logicalAnd(
                 $query->equals('pageuid', $pageuid),
             )
         );
-        $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
-        $result = $query->setLimit(1)->execute();
-        return $result;
+        $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
+        return $query->setLimit(1)->execute();
     }
 }

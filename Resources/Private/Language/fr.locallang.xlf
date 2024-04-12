@@ -227,6 +227,10 @@
 				<source>Close</source>
 				<target>Fermer</target>
 			</trans-unit>
+			<trans-unit id="terms.link">
+                <source><![CDATA[<a href="%s" target="_blank">terms</a>.]]></source>
+				<target><![CDATA[ <a href="%s" target="_blank">conditions</a>]]></target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -2,6 +2,8 @@
 
 namespace Nitsan\NsComments\ViewHelpers;
 
+use Nitsan\NsComments\Domain\Repository\CommentRepository;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -9,29 +11,19 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LastCommentViewHelper extends AbstractViewHelper
 {
-    /**
-     * commentRepository
-     *
-     * @var \Nitsan\NsComments\Domain\Repository\CommentRepository
-     */
-    protected $commentRepository = null;
 
-    /**
-     * Inject a news repository to enable DI
-     *
-     * @param \Nitsan\NsComments\Domain\Repository\CommentRepository $commentRepository
-     */
-    public function injectCommentRepository(\Nitsan\NsComments\Domain\Repository\CommentRepository $commentRepository)
-    {
-        $this->commentRepository = $commentRepository;
+    public function __construct(
+        protected  CommentRepository      $commentRepository,
+    ) {
     }
+
 
     /**
      * Initialize
      *
      * @return void
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('pageuid', 'int', 'pageuid', true);
@@ -41,12 +33,11 @@ class LastCommentViewHelper extends AbstractViewHelper
      * Last Comment
      *
      */
-    public function render()
+    public function render(): array|QueryResultInterface
     {
-        $pageuid = $this->arguments['pageuid'];
+        $pageUid = $this->arguments['pageuid'];
 
         // Get last comment of page
-        $pagecommentData = $this->commentRepository->getLastCommentOfPage($pageuid);
-        return $pagecommentData;
+        return $this->commentRepository->getLastCommentOfPage($pageUid);
     }
 }

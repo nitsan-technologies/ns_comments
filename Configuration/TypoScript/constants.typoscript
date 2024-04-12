@@ -31,7 +31,10 @@ plugin.tx_nscomments{
 		# cat=plugin.tx_nscomments/570/10; type=boolean; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsRequired
 		termsRequired = 0
 
-		# cat=plugin.tx_nscomments/570/10; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsTypolinkParameter
+		# cat=plugin.tx_nscomments/570/11; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsText
+		termsText =
+
+		# cat=plugin.tx_nscomments/570/12; type=string; label=LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsTypolinkParameter
 		termsTypolinkParameter = https://www.nitsan.in/
 
 		mainConfiguration {

@@ -1,4 +1,4 @@
-<?phphttps://gitlab.nitsantech.com/t3planet/extensions/ns_news_comments/-/tree/features/stability-v11?ref_type=heads
+<?php
 
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use Nitsan\NsComments\Controller\CommentController;

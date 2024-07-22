@@ -13,7 +13,7 @@
             <div class="comment-author">
                 <strong>{comment.username}</strong>
                 <span class="text-muted">
-                    <f:if condition="{settings.custom} && {settings.customdate} && {comment.customdate}">
+                    <f:if condition="{settings.custom} && {settings.customdate} && {settings.customtime}">
                         <f:then>
                             <f:format.date format="{settings.customdate}">{comment.crdate}</f:format.date> <f:translate key='at'/> <f:format.date format="{settings.customtime}">{comment.crdate}</f:format.date>
                         </f:then>

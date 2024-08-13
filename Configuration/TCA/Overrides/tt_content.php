@@ -13,7 +13,9 @@ $_EXTKEY = 'ns_comments';
 $pluginSignature = ExtensionUtility::registerPlugin(
     $_EXTKEY,
     'Comment',
-    'Comment'
+    'Comment',
+    '',
+    'plugins'
 );
 
 /* Flexform setting  */

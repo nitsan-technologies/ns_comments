@@ -39,23 +39,14 @@ class CommentRepository extends Repository
      *
      * @param $pageId
      */
-    public function getCommentsByPage($pageId, $mode)
+    public function getCommentsByPage($pageId)
     {
-        if (version_compare(TYPO3_branch, '9.0', '>')) {
-            $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-            $languageId = $context->getPropertyFromAspect('language', 'id');
-        } else {
-            $languageId = $GLOBALS['TSFE']->sys_language_uid;
-        }
+       
         $query = $this->createQuery();
         $queryArr = [
             $query->equals('pageuid', $pageId),
             $query->equals('comment', 0),
         ];
-        if ($mode > 0) {
-            $query->getQuerySettings()->setRespectSysLanguage(false);
-            $queryArr[] = $query->equals('sys_language_uid', $languageId);
-        }
         $query->matching($query->logicalAnd($queryArr));
         $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
         $query->getQuerySettings()->setRespectStoragePage(false);

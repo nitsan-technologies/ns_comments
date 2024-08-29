@@ -138,7 +138,7 @@ class CommentController extends ActionController
         $pid = $GLOBALS['TSFE']->id;
         $setting = $this->settings;
         if ($pid) {
-            $comments = $this->commentRepository->getCommentsByPage($pid,$setting['commnetlanguageFallbackMode'])->toArray();
+            $comments = $this->commentRepository->getCommentsByPage($pid)->toArray();
             $paths = $this->captchaVerificationPath();
 
             $captcha_path = $paths['captcha'] . '?' . rand();

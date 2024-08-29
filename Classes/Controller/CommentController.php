@@ -100,7 +100,7 @@ class CommentController extends ActionController
         // @extensionScannerIgnoreLine
         $pid = $GLOBALS['TSFE']->id;
         if ($pid) {
-            $comments = $this->commentRepository->getCommentsByPage($pid, $setting['commnetlanguageFallbackMode'])->toArray();
+            $comments = $this->commentRepository->getCommentsByPage($pid)->toArray();
             $paths = $this->captchaVerificationPath();
 
             $captcha_path = $paths['captcha'] . '?' . rand();

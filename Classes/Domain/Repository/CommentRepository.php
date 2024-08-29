@@ -27,8 +27,6 @@ namespace Nitsan\NsComments\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -43,28 +41,17 @@ class CommentRepository extends Repository
      * @param $mode
      * @return array|object[]|QueryResultInterface
      */
-    public function getCommentsByPage($pageId, $mode): QueryResultInterface|array
+    public function getCommentsByPage($pageId): QueryResultInterface|array
     {
-        $context = GeneralUtility::makeInstance(Context::class);
-        $languageId = $context->getPropertyFromAspect('language', 'id');
         $query = $this->createQuery();
-        if ($mode > 0) {
-            $query->getQuerySettings()->setRespectSysLanguage(false);
-            $query->matching(
-                $query->logicalAnd(
-                    $query->equals('pageuid', $pageId),
-                    $query->equals('comment', 0),
-                    $query->equals('sys_language_uid', $languageId)
-                )
-            );
-        } else {
+      
             $query->matching(
                 $query->logicalAnd(
                     $query->equals('pageuid', $pageId),
                     $query->equals('comment', 0)
                 )
             );
-        }
+        
         $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
         $query->getQuerySettings()->setRespectStoragePage(false);
         return $query->execute();

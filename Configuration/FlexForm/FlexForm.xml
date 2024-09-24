@@ -15,25 +15,6 @@
 			
 				<type>array</type>
 				<el>
-					<settings.commnetlanguageFallbackMode>
-						
-							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.languageFallbackMode</label>
-							<config>
-								<type>radio</type>
-								<items>
-									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.languageFallbackMode.strict</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1">
-										<numIndex index="0">LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.languageFallbackMode.translated</numIndex>
-										<numIndex index="1">1</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						
-					</settings.commnetlanguageFallbackMode>
 					<settings.custom>
 					
 							<label>LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.custom</label>

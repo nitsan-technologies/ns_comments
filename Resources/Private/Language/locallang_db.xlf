@@ -174,9 +174,6 @@
 			<trans-unit id="flexform.userSettings">
 				<source>Comment user settings</source>
 			</trans-unit>
-			<trans-unit id="flexform.commnetlanguageFallbackMode">
-				<source>Language based comments</source>
-			</trans-unit>
 			<trans-unit id="sendMailToAdmin">
 				<source>Enable Mail: Enable Email to Admin</source>
 			</trans-unit>
@@ -221,15 +218,6 @@
 			</trans-unit>
 			<trans-unit id="termsTypolinkParameter">
 				<source>Terms typolink parameter</source>
-			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode">
-				<source>Language Fallback</source>
-			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode.strict">
-				<source>Default</source>
-			</trans-unit>
-			<trans-unit id="flexform.languageFallbackMode.translated">
-				<source>Language based comments</source>
 			</trans-unit>
 			<trans-unit id="termsText">
 				<source>Terms Text</source>

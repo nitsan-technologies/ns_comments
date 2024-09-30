@@ -88,14 +88,19 @@ class CommentController extends ActionController
         $setting = $this->settings;
         $setting['relatedComments'] = $setting['relatedComments'] ?? '';
         $relatedComments = $setting['relatedComments'];
+        
         if ($relatedComments) {
             $setting['custom'] = false;
-            $setting['dateFormat'] = $setting['mainConfiguration']['customDateFormat'];
-            $setting['timeFormat'] = $setting['mainConfiguration']['customTimeFormat'];
-            $setting['captcha'] = $setting['mainConfiguration']['disableCaptcha'];
-            $image = $setting['mainConfiguration']['userImage'];
+            $setting['dateFormat'] = $setting['mainConfiguration']['customDateFormat'] ?? ''; 
+            $setting['timeFormat'] = $setting['mainConfiguration']['customTimeFormat'] ?? ''; 
+            $setting['captcha'] = $setting['mainConfiguration']['disableCaptcha'] ?? ''; 
+        
+            // Check if 'userImage' exists before assigning it to $image
+            $image = isset($setting['mainConfiguration']['userImage']) ? $setting['mainConfiguration']['userImage'] : null;
+        
             $this->view->assign('relatedComments', true);
         }
+        
 
         // @extensionScannerIgnoreLine
         $pid = $GLOBALS['TSFE']->id;

@@ -10,5 +10,5 @@ $extKey = 'ns_comments';
 ExtensionManagementUtility::addStaticFile(
     $extKey,
     'Configuration/TypoScript',
-    '[NITSAN] Comment'
+    'Comment'
 );

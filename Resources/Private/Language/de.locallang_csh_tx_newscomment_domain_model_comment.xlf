@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ns_comments/Resources/Private/Language/locallang_csh_tx_newscomment_domain_model_comment.xlf" date="2016-11-08T11:15:02Z" product-name="ns_comments">
+		<header/>
+		<body>
+			<trans-unit id="pageuid.description">
+				<source>pageuid</source>
+				<target>Seiten-ID</target>
+			</trans-unit>
+			<trans-unit id="username.description">
+				<source>username</source>
+				<target>Benutzername</target>
+			</trans-unit>
+			<trans-unit id="usermail.description">
+				<source>usermail</source>
+				<target>Benutzer-E-Mail</target>
+			</trans-unit>
+			<trans-unit id="comment.description">
+				<source>comment</source>
+				<target>Kommentar</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,181 +1,243 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:ns_comments/Resources/Private/Language/locallang.xlf" date="2016-11-08T11:15:02Z" product-name="ns_comments">
+	<file source-language="en" datatype="plaintext" original="EXT:ns_comments/Resources/Private/Language/locallang.xlf" date="2016-11-08T11:15:02Z" product-name="ns_comments">
 		<header/>
 		<body>
 			<trans-unit id="pi1_title" xml:space="preserve">
+				<source>Comment</source>
 				<target>Kommentar</target>
 			</trans-unit>
 			<trans-unit id="backend.dateformate" xml:space="preserve">
-				<target>Datumsformat</target>
+				<source>Date Formate</source>
+				<target>Datum Format</target>
 			</trans-unit>
 			<trans-unit id="backend.timeformate" xml:space="preserve">
-				<target>Zeitformat</target>
+				<source>Time Formate</source>
+				<target>Zeit Format</target>
 			</trans-unit>
 			<trans-unit id="backend.Image" xml:space="preserve">
+				<source>Comment User Image</source>
 				<target>Kommentar Benutzerbild</target>
 			</trans-unit>
 			<trans-unit id="backend.captcha" xml:space="preserve">
-				<target>Deaktivieren Sie das Captcha</target>
+				<source>Disable Captcha</source>
+				<target>Captcha deaktivieren</target>
 			</trans-unit>
 			<trans-unit id="backend.userSettings.1" xml:space="preserve">
-				<target>FE-Benutzer sowie der anonyme Benutzer können die Nachrichten kommentieren</target>
+				<source>FE-user as well as the Anonymous user can comment on the page</source>
+				<target>FE-Benutzer sowie der anonyme Benutzer können auf der Seite kommentieren</target>
 			</trans-unit>
 			<trans-unit id="backend.userSettings.2" xml:space="preserve">
-				<target>Nur FE-Benutzer können Neuigkeiten kommentieren</target>
+				<source>Only FE-users can comment on page</source>
+				<target>Nur FE-Benutzer können auf der Seite kommentieren</target>
 			</trans-unit>
 			<trans-unit id="backend.feUserloginpid" xml:space="preserve">
-				<target>FE-Benutzer Anmeldeseite ID</target>
+				<source>FE-user login page Id</source>
+				<target>FE-Benutzer Login Seite Id</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment">
+				<source>Comment</source>
 				<target>Kommentar</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.pageuid">
-				<target>Pageuid</target>
+				<source>Pageuid</source>
+				<target>Seiten-ID</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.username">
+				<source>Name</source>
 				<target>Name</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.usermail">
-				<target>Email</target>
+				<source>Email</source>
+				<target>E-Mail</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.approvedmessage">
+				<source>Comment approved successfully. Reload the page to see the comment.</source>
 				<target>Kommentar erfolgreich genehmigt. Laden Sie die Seite neu, um den Kommentar zu sehen.</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.unapprovedmessage">
-				<target>Entweder ist der Kommentar bereits genehmigt oder das Zugriffstoken ist ungültig.</target>
+				<source>Either comment is already approved or invalid access token.</source>
+				<target>Entweder der Kommentar wurde bereits genehmigt oder der Zugriffs-Token ist ungültig.</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.comment">
+				<source>Comment</source>
 				<target>Kommentar</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.lblcomments">
-				<target>Bemerkungen</target>
+				<source>Comments</source>
+				<target>Kommentare</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.name">
+				<source>Name</source>
 				<target>Name</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.email">
-				<target>Email</target>
+				<source>Email</source>
+				<target>E-Mail</target>
 			</trans-unit>
 			<trans-unit id="email">
-				<target>Bitte geben Sie Ihre gültige E-Mail Adresse ein</target>
+				<source>Please enter your valid email address</source>
+				<target>Bitte geben Sie Ihre gültige E-Mail-Adresse ein</target>
 			</trans-unit>
 			<trans-unit id="email_required">
+				<source>Valid email is required!</source>
 				<target>Gültige E-Mail ist erforderlich!</target>
 			</trans-unit>
 			<trans-unit id="name">
+				<source>Please enter your name</source>
 				<target>Bitte geben Sie Ihren Namen ein</target>
 			</trans-unit>
 			<trans-unit id="name_required">
+				<source>Name is required!</source>
 				<target>Name ist erforderlich!</target>
 			</trans-unit>
 			<trans-unit id="comment">
+				<source>Please enter your comment</source>
 				<target>Bitte geben Sie Ihren Kommentar ein</target>
 			</trans-unit>
 			<trans-unit id="comment_required">
+				<source>Comment is required!</source>
 				<target>Kommentar ist erforderlich!</target>
 			</trans-unit>
 			<trans-unit id="captcha">
+				<source>Enter the above code here</source>
 				<target>Geben Sie den obigen Code hier ein</target>
 			</trans-unit>
 			<trans-unit id="captcha_required">
+				<source>Captcha is required!</source>
 				<target>Captcha ist erforderlich!</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.captcha">
+				<source>Enter the above code here</source>
 				<target>Geben Sie den obigen Code hier ein</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.replylabel">
+				<source>Reply</source>
 				<target>Antworten</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.nocommentsfound">
-				<target>Sei der erste der kommentiert</target>
+				<source>Be the First to Comment</source>
+				<target>Seien Sie der Erste, der kommentiert</target>
 			</trans-unit>
 			<trans-unit id="at">
-				<target>Beim</target>
+				<source>At</source>
+				<target>Bei</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.mailmessage">
-				<target>Neuer Kommentar wird auf Seite hinzugefügt</target>
+				<source>New Comment is added on page</source>
+				<target>Neuer Kommentar wurde auf der Seite hinzugefügt</target>
 			</trans-unit>
 			<trans-unit id="form.submitButton">
-				<target>Kommentar hinzufügen</target>
+				<source>Post comment</source>
+				<target>Kommentar veröffentlichen</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.pageTitle">
-				<target>Page</target>
+				<source>Seite</source>
+				<target>Seite</target>
 			</trans-unit>
 			<trans-unit id="mandatory">
+				<source>These fields are required.</source>
 				<target>Diese Felder sind erforderlich.</target>
 			</trans-unit>
 			<trans-unit id="replytext">
-				<target>Antworte auf Kommentar</target>
+				<source>Reply to comment</source>
+				<target>Antworten auf Kommentar</target>
 			</trans-unit>
 			<trans-unit id="form.emailError">
-				<target>Gib eine gültige E-Mail Adresse ein</target>
+				<source>Enter valid email address</source>
+				<target>Geben Sie eine gültige E-Mail-Adresse ein</target>
 			</trans-unit>
 			<trans-unit id="form.nameError">
+				<source>Enter valid name</source>
 				<target>Geben Sie einen gültigen Namen ein</target>
 			</trans-unit>
 			<trans-unit id="form.captchaValidationError">
-				<target>Code stimmt nicht überein!</target>
+				<source>Code does not match!</source>
+				<target>Der Code stimmt nicht überein!</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.validationMessage">
+				<source>Code does not match</source>
 				<target>Code stimmt nicht überein</target>
 			</trans-unit>
 			<trans-unit id="form.captchaRefresh">
-				<target>Kann das Bild nicht gelesen werden? </target>
+				<source>Can't read the image? </source>
+				<target>Können Sie das Bild nicht lesen?</target>
 			</trans-unit>
 			<trans-unit id="form.captchaRefreshButton">
-				<target>Klicken Sie hier, um zu aktualisieren</target>
+				<source>Click here to refresh</source>
+				<target>Klicken Sie hier, um es neu zu laden</target>
 			</trans-unit>
 			<trans-unit id="form.approveMessage">
-				<target>Danke für deinen Kommentar. Dein Kommentar wird nach der Überprüfung sichtbar.</target>
+				<source>Thank you for your comment. Your Comment Will Be Visible After Approval.</source>
+				<target>Vielen Dank für Ihren Kommentar. Ihr Kommentar wird nach Genehmigung sichtbar sein.</target>
 			</trans-unit>
 			<trans-unit id="form.approveerrorMessage">
-				<target>Hoppla! Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.</target>
+				<source>Oops! Something went wrong, please try again later.</source>
+				<target>Hoppla! Etwas ist schiefgelaufen, bitte versuchen Sie es später erneut.</target>
 			</trans-unit>
 			<trans-unit id="form.thankyouMessage">
-				<target>Danke für deinen Kommentar. Ihr Kommentar wurde erfolgreich hinzugefügt.</target>
+				<source>Thank you for your comment. Your Comment Added Successfully.</source>
+				<target>Vielen Dank für Ihren Kommentar. Ihr Kommentar wurde erfolgreich hinzugefügt.</target>
 			</trans-unit>
 			<trans-unit id="tx_nscomments_domain_model_comment.errorMessage">
-				<target>Kein Nachrichteneintrag gefunden</target>
+				<source>No Entry Found</source>
+				<target>Kein Eintrag gefunden</target>
 			</trans-unit>
 			<trans-unit id="CommentsandResponses">
+				<source>Comments and Responses</source>
 				<target>Kommentare und Antworten</target>
 			</trans-unit>
 			<trans-unit id="pagefelogin">
-				<target>Klick hier</target>
+				<source>Click here</source>
+				<target>Hier klicken</target>
 			</trans-unit>
 			<trans-unit id="pagefeloginmsg">
-				<target>anmelden und Kommentare hinzufügen.</target>
+				<source>to login and add your comments.</source>
+				<target>um sich anzumelden und Ihren Kommentar hinzuzufügen.</target>
 			</trans-unit>
 			<trans-unit id="commentas">
-				<target>Kommentar wird als hinzugefügt</target>
+				<source>Comment will be added as</source>
+				<target>Kommentar wird hinzugefügt als</target>
 			</trans-unit>
 			<trans-unit id="confirm1">
-				<target>Derzeit wird dieser Kommentar nicht in den Nachrichten angezeigt.</target>
+				<source>Currently, this comment is not displayed on the page.</source>
+				<target>Derzeit wird dieser Kommentar nicht auf der Seite angezeigt.</target>
 			</trans-unit>
 			<trans-unit id="confirm2">
-				<target>Klick hier</target>
+				<source>Click Here</source>
+				<target>Klicken Sie hier</target>
 			</trans-unit>
 			<trans-unit id="confirm3">
-				<target>um diesen Kommentar in den Nachrichten anzuzeigen.</target>
+				<source>to display this comment on the page.</source>
+				<target>, um diesen Kommentar auf der Seite anzuzeigen.</target>
 			</trans-unit>
 			<trans-unit id="form.termsError">
-				<target>Bitte akzeptieren</target>
+				<source>Please accept</source>
+				<target>Bitte akzeptieren Sie die</target>
 			</trans-unit>
 			<trans-unit id="terms_required">
-				<target>Datenschutzbestimmungen zu akzeptieren ist erforderlich!</target>
+				<source>Terms is required!</source>
+				<target>Bedingungen</target>
 			</trans-unit>
 			<trans-unit id="terms.label">
-				<target>Datenschutzbestimungen</target>
+				<source>Terms</source>
+				<target>!</target>
 			</trans-unit>
 			<trans-unit id="terms.text">
-				<target><![CDATA[Ich akzeptiere die <a href="%s" target="_blank">Datenschutzbestimmungen</a>.]]></target>
+				<source>
+					<![CDATA[I accept the <a href="%s" target="_blank">terms</a>.]]>
+				</source>
+				<target>Bedingungen</target>
 			</trans-unit>
 			<trans-unit id="close">
-				<target>Schließen</target>
+				<source>Close</source>
+				<target>Ich akzeptiere die &lt;a href="%s" target="_blank"&gt;Bedingungen&lt;/a&gt;.</target>
 			</trans-unit>
 			<trans-unit id="terms.link">
-				<target><![CDATA[ <a href="%s" target="_blank">Datenschutzbestimmungen</a>]]></target>
+				<source>
+					<![CDATA[<a href="%s" target="_blank">terms</a>]]>
+				</source>
+				<target>Schließen</target>
 			</trans-unit>
 		</body>
 	</file>

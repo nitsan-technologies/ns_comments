@@ -3,21 +3,21 @@
   <file source-language="en" datatype="plaintext" original="EXT:ns_comments/Resources/Private/Language/locallang_csh_tx_newscomment_domain_model_comment.xlf" date="2016-11-08T11:15:02Z" product-name="ns_comments" target-language="da">
     <header/>
     <body>
-      <trans-unit id="pageuid.description">
+      <trans-unit id="pageuid.description" approved="yes">
         <source>pageuid</source>
-        <target state="needs-translation">pageuid</target>
+        <target state="final">side-uid</target>
       </trans-unit>
-      <trans-unit id="username.description">
+      <trans-unit id="username.description" approved="yes">
         <source>username</source>
-        <target state="needs-translation">username</target>
+        <target state="final">brugernavn</target>
       </trans-unit>
-      <trans-unit id="usermail.description">
+      <trans-unit id="usermail.description" approved="yes">
         <source>usermail</source>
-        <target state="needs-translation">usermail</target>
+        <target state="final">brugermail</target>
       </trans-unit>
-      <trans-unit id="comment.description">
+      <trans-unit id="comment.description" approved="yes">
         <source>comment</source>
-        <target state="needs-translation">comment</target>
+        <target state="final">kommentar</target>
       </trans-unit>
     </body>
   </file>

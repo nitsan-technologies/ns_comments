@@ -40,16 +40,16 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * CommentController
  */
 class CommentController extends ActionController
 {
-
     public function __construct(
         protected CommentRepository  $commentRepository,
-        protected PersistenceManager $persistenceManager
+        protected PersistenceManager $persistenceManager,
     ) {}
 
     /**
@@ -61,14 +61,14 @@ class CommentController extends ActionController
     {
         // Storage page configuration
         $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] = $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] ?? '';
+        $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] ??= '';
         if ($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) {
             $currentPid['persistence']['storagePid'] = $this->request->getParsedBody()['id'];
             $this->configurationManager->setConfiguration(array_merge($extbaseFrameworkConfiguration, $currentPid));
         } else {
             if (empty($extbaseFrameworkConfiguration['persistence']['storagePid'])) {
                 if ($_REQUEST['tx_nscomments_comment']) {
-                    $_REQUEST['tx_nscomments_comment']['Storagepid'] = $_REQUEST['tx_nscomments_comment']['Storagepid'] ?? '';
+                    $_REQUEST['tx_nscomments_comment']['Storagepid'] ??= '';
                     $currentPid['persistence']['storagePid'] = $_REQUEST['tx_nscomments_comment']['Storagepid'];
                 } else {
                     $currentPid['persistence']['storagePid'] = $this->request->getParsedBody()['id'];
@@ -86,37 +86,42 @@ class CommentController extends ActionController
     public function listAction(): ResponseInterface
     {
         $setting = $this->settings;
-        $setting['relatedComments'] = $setting['relatedComments'] ?? '';
+        $setting['relatedComments'] ??= '';
         $relatedComments = $setting['relatedComments'];
-        
+
         if ($relatedComments) {
             $setting['custom'] = false;
-            $setting['dateFormat'] = $setting['mainConfiguration']['customDateFormat'] ?? ''; 
-            $setting['timeFormat'] = $setting['mainConfiguration']['customTimeFormat'] ?? ''; 
-            $setting['captcha'] = $setting['mainConfiguration']['disableCaptcha'] ?? ''; 
-        
+            $setting['dateFormat'] = $setting['mainConfiguration']['customDateFormat'] ?? '';
+            $setting['timeFormat'] = $setting['mainConfiguration']['customTimeFormat'] ?? '';
+            $setting['captcha'] = $setting['mainConfiguration']['disableCaptcha'] ?? '';
+
             // Check if 'userImage' exists before assigning it to $image
-            $image = isset($setting['mainConfiguration']['userImage']) ? $setting['mainConfiguration']['userImage'] : null;
-        
+            $image = $setting['mainConfiguration']['userImage'] ?? null;
+
             $this->view->assign('relatedComments', true);
         }
-        
 
-        // @extensionScannerIgnoreLine
-        $pid = $GLOBALS['TSFE']->id;
+        $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
+        if ($versionNumber['version_main'] <= 12) {
+            // @extensionScannerIgnoreLine
+            $pid = $pageUid = $GLOBALS['TSFE']->id;
+        } else {
+            $pid = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information')->getId();
+        }
+
         if ($pid) {
             $comments = $this->commentRepository->getCommentsByPage($pid)->toArray();
             $paths = $this->captchaVerificationPath();
 
             $captcha_path = $paths['captcha'] . '?' . rand();
-            $image = $image ?? '';
+            $image ??= '';
             $this->view->assignMultiple([
                 'captcha_path' => $captcha_path,
                 'verification' => $paths['verification'],
                 'comments' => $comments,
                 'Image' => $image,
                 'pid' => $pid,
-                'settings' => $setting
+                'settings' => $setting,
             ]);
         } else {
             $error = LocalizationUtility::translate('tx_nscomments_domain_model_comment.errorMessage', 'NsComments');
@@ -134,8 +139,13 @@ class CommentController extends ActionController
      */
     public function createAction(Comment $newComment): ResponseInterface
     {
-        // @extensionScannerIgnoreLine
-        $pageUid = $GLOBALS['TSFE']->id;
+        $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
+        if ($versionNumber['version_main'] <= 12) {
+            // @extensionScannerIgnoreLine
+            $pageUid = $GLOBALS['TSFE']->id;
+        } else {
+            $pageUid = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information')->getId();
+        }
 
         $request = $this->request->getArguments();
         $newComment->setCrdate(time());
@@ -177,7 +187,7 @@ class CommentController extends ActionController
             'tx_nscomments_comment[action]',
             'tx_nscomments_comment[controller]',
             'tx_nscomments_comment',
-            'type'
+            'type',
         ];
         $uri = $this->uriBuilder->reset()
             ->setTargetPageUid($uid)
@@ -196,11 +206,28 @@ class CommentController extends ActionController
      */
     public function getPath(mixed $path, mixed $extName): string
     {
-        $arguments = ['path' => $path, 'extensionName' => $extName];
-        $path = $arguments['path'];
-        $publicPath = sprintf('EXT:%s/Resources/Public/%s', $arguments['extensionName'], ltrim($path, '/'));
-        $uri = PathUtility::getPublicResourceWebPath($publicPath);
-        return substr($uri, 1);
+        $publicPath = sprintf('EXT:%s/Resources/Public/%s', $extName, ltrim($path, '/'));
+
+        $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
+        
+        if ($versionNumber['version_main'] >= 14) {
+            $systemResourceFactory = GeneralUtility::makeInstance(
+                \TYPO3\CMS\Core\SystemResource\SystemResourceFactory::class
+            );
+            $resource = $systemResourceFactory->createPublicResource($publicPath);
+            $resourcePublisher = GeneralUtility::makeInstance(
+                \TYPO3\CMS\Core\SystemResource\Publishing\SystemResourcePublisherInterface::class
+            );
+
+            return (string)$resourcePublisher->generateUri(
+                $resource,
+                $this->request
+            );
+        } else {
+            // @extensionScannerIgnoreLine
+            $uri = PathUtility::getPublicResourceWebPath($publicPath);
+            return substr($uri, 1);
+        }
     }
 
     /**

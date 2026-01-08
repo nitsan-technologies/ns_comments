@@ -1,62 +1,62 @@
 plugin.tx_nscomments {
-	view {
-		templateRootPaths.0 = {$plugin.tx_nscomments.view.templateRootPath}
-		partialRootPaths.0 = {$plugin.tx_nscomments.view.partialRootPath}
-		layoutRootPaths.0 = {$plugin.tx_nscomments.view.layoutRootPath}
-	}
-	settings {
-		termsRequired = {$plugin.tx_nscomments.settings.termsRequired}
-		termsText = {$plugin.tx_nscomments.settings.termsText}
-		termsTypolinkParameter = {$plugin.tx_nscomments.settings.termsTypolinkParameter}
-		mainConfiguration {
-			customDateFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customDateFormat}
-			customTimeFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customTimeFormat}
-			disableCaptcha = {$plugin.tx_nscomments.settings.mainConfiguration.disableCaptcha}
-		}
-	}
+    view {
+        templateRootPaths.0 = {$plugin.tx_nscomments.view.templateRootPath}
+        partialRootPaths.0 = {$plugin.tx_nscomments.view.partialRootPath}
+        layoutRootPaths.0 = {$plugin.tx_nscomments.view.layoutRootPath}
+    }
+    settings {
+        termsRequired = {$plugin.tx_nscomments.settings.termsRequired}
+        termsText = {$plugin.tx_nscomments.settings.termsText}
+        termsTypolinkParameter = {$plugin.tx_nscomments.settings.termsTypolinkParameter}
+        mainConfiguration {
+            customDateFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customDateFormat}
+            customTimeFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customTimeFormat}
+            disableCaptcha = {$plugin.tx_nscomments.settings.mainConfiguration.disableCaptcha}
+        }
+    }
 }
 
 page {
-	includeCSS {
-		nscomment_StyleCss = {$plugin.tx_nscomments.settings.StyleCss}
-		nscomment_StyleCss.if.isTrue = {$plugin.tx_nscomments.settings.StyleCss}
-		nscomment_FontAwesomeCss = {$plugin.tx_nscomments.settings.FontAwesomeCss}
-		nscomment_FontAwesomeCss.if.isTrue = {$plugin.tx_nscomments.settings.FontAwesomeCss}
-	}
-	includeJS{
-		nscomment_Minjs = {$plugin.tx_nscomments.settings.Minjs}
-		nscomment_Minjs.if.isTrue = {$plugin.tx_nscomments.settings.Minjs}
-	}
-	includeJSFooter{
-		nscomment_CustomJS = {$plugin.tx_nscomments.settings.CustomJS}
-		nscomment_CustomJS.if.isTrue = {$plugin.tx_nscomments.settings.CustomJS}
-	}
+    includeCSS {
+        nscomment_StyleCss = {$plugin.tx_nscomments.settings.StyleCss}
+        nscomment_StyleCss.if.isTrue = {$plugin.tx_nscomments.settings.StyleCss}
+        nscomment_FontAwesomeCss = {$plugin.tx_nscomments.settings.FontAwesomeCss}
+        nscomment_FontAwesomeCss.if.isTrue = {$plugin.tx_nscomments.settings.FontAwesomeCss}
+    }
+    includeJS {
+        nscomment_Minjs = {$plugin.tx_nscomments.settings.Minjs}
+        nscomment_Minjs.if.isTrue = {$plugin.tx_nscomments.settings.Minjs}
+    }
+    includeJSFooter {
+        nscomment_CustomJS = {$plugin.tx_nscomments.settings.CustomJS}
+        nscomment_CustomJS.if.isTrue = {$plugin.tx_nscomments.settings.CustomJS}
+    }
 }
 
 commentAjaxCall = PAGE
 commentAjaxCall {
-	typeNum = 991
-	config{
-		disableAllHeaderCode = 1
-		xhtml_cleaning = 0
-		debug = 0
-		no_cache = 1
-		admPanel = 0
-	}
-	315123 = USER
-	315123{
-		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-		pluginName = Comment
-		extensionName = NsComments
-		controller = Comment
-		vendorName = Nitsan
-		action = create
-		switchableControllerActions{
-			Comment{
-				1 = create
-			}
-		}
-	}
+    typeNum = 991
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        debug = 0
+        no_cache = 1
+        admPanel = 0
+    }
+    315123 = USER
+    315123 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        pluginName = Comment
+        extensionName = NsComments
+        controller = Comment
+        vendorName = Nitsan
+        action = create
+        switchableControllerActions {
+            Comment {
+                1 = create
+            }
+        }
+    }
 }
 
 lib.tx_nscomments.comments = USER
@@ -71,7 +71,7 @@ lib.tx_nscomments.comments {
         }
     }
     settings < plugin.tx_nscomments.settings
-    settings{
-    	relatedComments = 1
+    settings {
+        relatedComments = 1
     }
 }

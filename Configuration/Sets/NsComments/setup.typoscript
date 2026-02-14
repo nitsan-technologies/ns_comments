@@ -1,0 +1,36 @@
+@import 'EXT:ns_comments/Configuration/TypoScript/setup.typoscript'
+
+plugin.tx_nscomments {
+    view {
+        templateRootPaths.0 = {$ns_comments.view.templateRootPath}
+        partialRootPaths.0 = {$ns_comments.view.partialRootPath}
+        layoutRootPaths.0 = {$ns_comments.view.layoutRootPath}
+    }
+    settings {
+        termsRequired = {$ns_comments.configuration.terms.termsRequired}
+        termsText = {$ns_comments.configuration.termsText}
+        termsTypolinkParameter = {$ns_comments.configuration.termsTypolinkParameter}
+        mainConfiguration {
+            customDateFormat = {$ns_comments.configuration.main.customDateFormat}
+            customTimeFormat = {$ns_comments.configuration.main.customTimeFormat}
+            disableCaptcha = {$ns_comments.configuration.main.disableCaptcha}
+        }
+    }
+}
+
+page {
+    includeCSS {
+        nscomment_StyleCss = {$ns_comments.configuration.assets.StyleCss}
+        nscomment_StyleCss.if.isTrue = {$ns_comments.configuration.assets.StyleCss}
+        nscomment_FontAwesomeCss = {$ns_comments.configuration.assets.FontAwesomeCss}
+        nscomment_FontAwesomeCss.if.isTrue = {$ns_comments.configuration.assets.FontAwesomeCss}
+    }
+    includeJS {
+        nscomment_Minjs = {$ns_comments.configuration.assets.Minjs}
+        nscomment_Minjs.if.isTrue = {$ns_comments.configuration.assets.Minjs}
+    }
+    includeJSFooter {
+        nscomment_CustomJS = {$ns_comments.configuration.assets.CustomJS}
+        nscomment_CustomJS.if.isTrue = {$ns_comments.configuration.assets.CustomJS}
+    }
+}

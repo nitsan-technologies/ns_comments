@@ -12,10 +12,10 @@ $EM_CONF['ns_comments'] = [
     'internal' => '',
     'uploadfolder' => '0',
     'createDirs' => '',
-    'version' => '13.0.1',
+    'version' => '14.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.0.0-14.0.9',
+            'typo3' => '12.0.0-14.9.99',
         ],
         'conflicts' => [
         ],

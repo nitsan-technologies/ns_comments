@@ -8,7 +8,7 @@ plugin.tx_nscomments {
     }
     settings {
         termsRequired = {$ns_comments.configuration.terms.termsRequired}
-        termsText = {$ns_comments.configuration.termsText}
+        termsText = {$ns_comments.configuration.terms.termsText}
         termsTypolinkParameter = {$ns_comments.configuration.termsTypolinkParameter}
         mainConfiguration {
             customDateFormat = {$ns_comments.configuration.main.customDateFormat}

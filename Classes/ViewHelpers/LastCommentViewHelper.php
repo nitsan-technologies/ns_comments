@@ -11,11 +11,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LastCommentViewHelper extends AbstractViewHelper
 {
-
     public function __construct(
-        protected  CommentRepository      $commentRepository,
-    ) {
-    }
+        protected CommentRepository $commentRepository,
+    ) {}
 
 
     /**

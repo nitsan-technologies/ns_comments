@@ -40,7 +40,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @internal
      * @todo make private in 13.0 and expose value via getter
      */
-    protected int|null $_languageUid = null;
+    protected ?int $_languageUid = null;
 
 
     /**

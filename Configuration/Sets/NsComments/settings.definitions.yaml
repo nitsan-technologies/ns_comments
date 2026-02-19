@@ -1,0 +1,119 @@
+categories:
+  ns_comments:
+    label: NS Comments
+
+  ns_comments.view:
+    label: View Settings
+    parent: ns_comments
+
+  ns_comments.configuration:
+    label: Configuration Settings
+    parent: ns_comments
+
+  ns_comments.configuration.assets:
+    label: Asset Settings
+    parent: ns_comments.configuration
+
+  ns_comments.configuration.terms:
+    label: Terms Settings
+    parent: ns_comments.configuration
+
+  ns_comments.configuration.main:
+    label: Main Configuration
+    parent: ns_comments.configuration
+
+settings:
+
+  ##################################################
+  # View
+  ##################################################
+
+  ns_comments.view.templateRootPath:
+    label: Path to template root (FE)
+    category: ns_comments.view
+    type: string
+    default: EXT:ns_comments/Resources/Private/Templates/
+
+  ns_comments.view.partialRootPath:
+    label: Path to template partials (FE)
+    category: ns_comments.view
+    type: string
+    default: EXT:ns_comments/Resources/Private/Partials/
+
+  ns_comments.view.layoutRootPath:
+    label: Path to template layouts (FE)
+    category: ns_comments.view
+    type: string
+    default: EXT:ns_comments/Resources/Private/Layouts/
+
+  ##################################################
+  # Assets
+  ##################################################
+
+  ns_comments.configuration.assets.StyleCss:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addstyleCss
+    category: ns_comments.configuration.assets
+    type: string
+    default: EXT:ns_comments/Resources/Public/css/style.css
+
+  ns_comments.configuration.assets.FontAwesomeCss:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addfontAwesomeCss
+    category: ns_comments.configuration.assets
+    type: string
+    default: EXT:ns_comments/Resources/Public/css/font-awesome.min.css
+
+  ns_comments.configuration.assets.CustomJS:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addCustomJS
+    category: ns_comments.configuration.assets
+    type: string
+    default: EXT:ns_comments/Resources/Public/js/custom.js
+
+  ns_comments.configuration.assets.Minjs:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:addjqueryMinJS
+    category: ns_comments.configuration.assets
+    type: string
+    default: EXT:ns_comments/Resources/Public/js/jquery-3.6.0.min.js
+
+  ##################################################
+  # Terms
+  ##################################################
+
+  ns_comments.configuration.terms.termsRequired:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsRequired
+    category: ns_comments.configuration.terms
+    type: bool
+    default: false
+
+  ns_comments.configuration.terms.termsText:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsText
+    category: ns_comments.configuration.terms
+    type: string
+    default: ''
+
+  ns_comments.configuration.terms.termsTypolinkParameter:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:termsTypolinkParameter
+    category: ns_comments.configuration.terms
+    type: string
+    default: https://www.nitsan.in/
+
+  ##################################################
+  # Main Configuration
+  ##################################################
+
+  ns_comments.configuration.main.customDateFormat:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customDateFormat
+    category: ns_comments.configuration.main
+    type: string
+    default: F j, Y
+
+  ns_comments.configuration.main.customTimeFormat:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customTimeFormat
+    category: ns_comments.configuration.main
+    type: string
+    default: g:i a
+
+  ns_comments.configuration.main.disableCaptcha:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:disableCaptcha
+    category: ns_comments.configuration.main
+    type: bool
+    default: true

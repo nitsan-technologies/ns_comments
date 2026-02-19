@@ -25,7 +25,7 @@ class phptextClass
         }
 
         imagefill($im, 0, 0, $backgroundColor);
-        list($x, $y) = $this->ImageTTFCenter($im, $text, $font, $fontSize);
+        [$x, $y] = $this->ImageTTFCenter($im, $text, $font, $fontSize);
         imagettftext($im, $fontSize, 0, $x, $y, $textColor, $font, $text);
         if (imagejpeg($im, $dir . $fileName, 90)) {
             /*save image as JPG*/
@@ -79,7 +79,7 @@ class phptextClass
         }
 
         imagefill($im, 0, 0, $backgroundColor);
-        list($x, $y) = $this->ImageTTFCenter($im, $text, $font, $fontSize);
+        [$x, $y] = $this->ImageTTFCenter($im, $text, $font, $fontSize);
         imagettftext($im, $fontSize, 0, $x, $y, $textColor, $font, $text);
 
         imagejpeg($im, null, 90); /* Showing image */
@@ -107,9 +107,9 @@ class phptextClass
             $colour = substr($colour, 1);
         }
         if (strlen($colour) == 6) {
-            list($r, $g, $b) = [$colour[0] . $colour[1], $colour[2] . $colour[3], $colour[4] . $colour[5]];
+            [$r, $g, $b] = [$colour[0] . $colour[1], $colour[2] . $colour[3], $colour[4] . $colour[5]];
         } elseif (strlen($colour) == 3) {
-            list($r, $g, $b) = [$colour[0] . $colour[0], $colour[1] . $colour[1], $colour[2] . $colour[2]];
+            [$r, $g, $b] = [$colour[0] . $colour[0], $colour[1] . $colour[1], $colour[2] . $colour[2]];
         } else {
             return false;
         }

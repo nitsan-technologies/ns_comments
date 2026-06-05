@@ -6,8 +6,7 @@ mod.wizards.newContentElement.wizardItems.plugins {
 			title = LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:comment
 			description = LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:comment.description
 			tt_content_defValues{
-				CType = list
-				list_type = nscomments_comment
+				CType = nscomments_comment
 			}
 		}
 	}

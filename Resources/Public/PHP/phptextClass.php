@@ -4,7 +4,7 @@
  */
 class phptextClass
 {
-    public function phptext($text, $textColor, $backgroundColor = '', $fontSize, $imgWidth, $imgHeight, $dir, $fileName)
+    public function phptext(string $text, string $textColor, string $backgroundColor, int $fontSize, int $imgWidth, int $imgHeight, string $dir, string $fileName)
     {
         /* settings */
         $font = './calibri.ttf'; /*define font*/
@@ -34,7 +34,7 @@ class phptextClass
         }
     }
 
-    public function phpcaptcha($textColor, $backgroundColor, $imgWidth, $imgHeight, $noiceLines = 0, $noiceDots = 0, $noiceColor = '#162453')
+    public function phpcaptcha(string $textColor, string $backgroundColor, int $imgWidth, int $imgHeight, int $noiceLines = 0, int $noiceDots = 0, string $noiceColor = '#162453')
     {
         /* Settings */
         $text = $this->random();
@@ -82,8 +82,8 @@ class phptextClass
         [$x, $y] = $this->ImageTTFCenter($im, $text, $font, $fontSize);
         imagettftext($im, $fontSize, 0, $x, $y, $textColor, $font, $text);
 
-        imagejpeg($im, null, 90); /* Showing image */
         header('Content-Type: image/jpeg'); /* defining the image type to be shown in browser widow */
+        imagejpeg($im, null, 90); /* Showing image */
         imagedestroy($im); /* Destroying image instance */
         if (isset($_SESSION)) {
             $_SESSION['captcha_code'] = $text; /* set random text in session for captcha validation*/
@@ -101,7 +101,7 @@ class phptextClass
     }
 
     /*function to convert hex value to rgb array*/
-    protected function hexToRGB($colour)
+    protected function hexToRGB(string $colour)
     {
         if ($colour[0] == '#') {
             $colour = substr($colour, 1);
@@ -120,7 +120,7 @@ class phptextClass
     }
 
     /*function to get center position on image*/
-    protected function ImageTTFCenter($image, $text, $font, $size, $angle = 8)
+    protected function ImageTTFCenter($image, string $text, string $font,int $size, int $angle = 8)
     {
         $xi = imagesx($image);
         $yi = imagesy($image);

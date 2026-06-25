@@ -133,12 +133,17 @@ class CommentController extends ActionController
     /**
      * action create
      *
-     * @param Comment $newComment
+     * @param Comment|null $newComment
      *
      * @return ResponseInterface
      */
-    public function createAction(Comment $newComment): ResponseInterface
+    public function createAction(?Comment $newComment = null): ResponseInterface
     {
+        // If no form data was submitted (e.g. direct GET access by bots/crawlers), redirect
+        if ($newComment === null) {
+            return $this->redirect('list');
+        }
+
         $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
         if ($versionNumber['version_main'] <= 12) {
             // @extensionScannerIgnoreLine

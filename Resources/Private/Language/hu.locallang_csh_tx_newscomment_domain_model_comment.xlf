@@ -5,19 +5,19 @@
     <body>
       <trans-unit id="pageuid.description">
         <source>pageuid</source>
-        <target state="needs-translation">pageuid</target>
+        <target state="translated">Oldal UID</target>
       </trans-unit>
       <trans-unit id="username.description">
         <source>username</source>
-        <target state="needs-translation">username</target>
+        <target state="translated">Felhasználónév</target>
       </trans-unit>
       <trans-unit id="usermail.description">
         <source>usermail</source>
-        <target state="needs-translation">usermail</target>
+        <target state="translated">E-mail cím</target>
       </trans-unit>
       <trans-unit id="comment.description">
         <source>comment</source>
-        <target state="needs-translation">comment</target>
+        <target state="translated">Hozzászólás</target>
       </trans-unit>
     </body>
   </file>

@@ -3,7 +3,6 @@
 $EM_CONF['ns_comments'] = [
     'title' => 'TYPO3 Page Comments',
     'description' => 'Enable user-friendly commenting functionality for TYPO3 pages. Features nested replies, backend moderation, and admin email notifications.',
-
     'category' => 'plugin',
     'author' => 'Team T3Planet',
     'author_email' => 'info@t3planet.de',

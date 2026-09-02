@@ -8,6 +8,7 @@ plugin.tx_nscomments {
         termsRequired = {$plugin.tx_nscomments.settings.termsRequired}
         termsText = {$plugin.tx_nscomments.settings.termsText}
         termsTypolinkParameter = {$plugin.tx_nscomments.settings.termsTypolinkParameter}
+        approveComment = {$plugin.tx_nscomments.settings.approveComment}
         mainConfiguration {
             customDateFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customDateFormat}
             customTimeFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customTimeFormat}
@@ -18,18 +19,12 @@ plugin.tx_nscomments {
 
 page {
     includeCSS {
-        nscomment_StyleCss = {$plugin.tx_nscomments.settings.StyleCss}
-        nscomment_StyleCss.if.isTrue = {$plugin.tx_nscomments.settings.StyleCss}
-        nscomment_FontAwesomeCss = {$plugin.tx_nscomments.settings.FontAwesomeCss}
-        nscomment_FontAwesomeCss.if.isTrue = {$plugin.tx_nscomments.settings.FontAwesomeCss}
-    }
-    includeJS {
-        nscomment_Minjs = {$plugin.tx_nscomments.settings.Minjs}
-        nscomment_Minjs.if.isTrue = {$plugin.tx_nscomments.settings.Minjs}
+        nscomment_StyleCss = EXT:ns_comments/Resources/Public/css/style.css
+        nscomment_FontAwesomeCss = EXT:ns_comments/Resources/Public/css/font-awesome.min.css
     }
     includeJSFooter {
-        nscomment_CustomJS = {$plugin.tx_nscomments.settings.CustomJS}
-        nscomment_CustomJS.if.isTrue = {$plugin.tx_nscomments.settings.CustomJS}
+        nscomment_Minjs = EXT:ns_comments/Resources/Public/js/jquery-3.6.0.min.js
+        nscomment_CustomJS = EXT:ns_comments/Resources/Public/js/custom.js
     }
 }
 
@@ -73,5 +68,6 @@ lib.tx_nscomments.comments {
     settings < plugin.tx_nscomments.settings
     settings {
         relatedComments = 1
+        approveComment = {$plugin.tx_nscomments.settings.approveComment}
     }
 }

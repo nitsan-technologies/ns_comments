@@ -1,29 +1,47 @@
-$(function() {
-    submitComment();
-    hashValue();
-    onFocusValidation();
-    $parentCommentId = '';
-    replyComment();
-
-    if ($('.tx_nscomments .approvedmessage').length) {
-        $('html, body').stop().animate({
-            scrollTop: ($('.tx_nscomments .approvedmessage').offset().top)
-        }, 2000);
-        setTimeout(function() {
-            $('.tx_nscomments .approvedmessage').fadeOut("slow");
-        }, 9000);
+(function initNsComments() {
+    if (typeof jQuery === 'undefined') {
+        window.setTimeout(initNsComments, 50);
+        return;
     }
 
-    if ($('.tx_nscomments .approvecomment').length) {
-        showpopup();
+    jQuery(function($) {
+        submitComment();
+        hashValue();
+        onFocusValidation();
+        $parentCommentId = '';
+        replyComment();
+
+        if ($('.tx_nscomments .approvedmessage').length) {
+            $('html, body').stop().animate({
+                scrollTop: ($('.tx_nscomments .approvedmessage').offset().top)
+            }, 2000);
+            setTimeout(function() {
+                $('.tx_nscomments .approvedmessage').fadeOut("slow");
+            }, 9000);
+        }
+
+        if ($('.tx_nscomments .approvecomment').length) {
+            showpopup();
+        }
+        $(".tx_nscomments .approvecomment #cancel_button").click(function(){
+            hidepopup();
+        });
+        $(".tx_nscomments .approvecomment #close_button").click(function(){
+            hidepopup();
+        });
+    });
+})();
+
+function nsCommentsParseResponse(response) {
+    if (typeof response === 'string') {
+        try {
+            return JSON.parse(response);
+        } catch (e) {
+            return {};
+        }
     }
-    $(".tx_nscomments .approvecomment #cancel_button").click(function(){
-        hidepopup();
-    });
-    $(".tx_nscomments .approvecomment #close_button").click(function(){
-        hidepopup();
-    });
-});
+    return response || {};
+}
 
 // Show popup div
 function showpopup()
@@ -63,29 +81,30 @@ function submitComment() {
 
     // Submit comment
     $(document).on('submit', '.tx_nscomments #comment-form', function(event) {
+        event.preventDefault();
         var captcha = $('.tx_nscomments #captcha').val();
         var ajaxURL = $(this).attr('action');
         var datatype = $('.tx_nscomments #dataType').val();
         var commentHTML = $('.active-comment-form').html();
-        if (!event.isDefaultPrevented()) {
-            if (validateField()) {
-                $.ajax({
-                    type: 'POST',
-                    url: ajaxURL,
-                    dataType: datatype,
-                    cache:true,
-                    data: $(this).serialize(),
-                    beforeSend: function() {
-                        $('.tx_nscomments #submit').attr('disabled', true);
-                        $('.tx_nscomments #submit').css('cursor', 'default');
-                    },
-                    success: function(response) {
-                        if ($('.tx_nscomments #approval').val() == 0) {
-                            // GET HTML for comment list
-                            $(".tx_nscomments #comments-list").load(location.href + " .tx_nscomments #comments-list>*", function(responseTxt, statusTxt, jqXHR) {
-                               if(statusTxt == "success"){
-                                    // Scroll to comment
-                                    $.each(response, function(key, val) {
+        if (validateField()) {
+            $.ajax({
+                type: 'POST',
+                url: ajaxURL,
+                dataType: datatype,
+                cache:true,
+                data: $(this).serialize(),
+                beforeSend: function() {
+                    $('.tx_nscomments #submit').attr('disabled', true);
+                    $('.tx_nscomments #submit').css('cursor', 'default');
+                },
+                success: function(response) {
+                    var parsedResponse = nsCommentsParseResponse(response);
+                    if ($('.tx_nscomments #approval').val() == 0) {
+                        // GET HTML for comment list
+                        $(".tx_nscomments #comments-list").load(location.href + " .tx_nscomments #comments-list>*", function(responseTxt, statusTxt, jqXHR) {
+                           if(statusTxt == "success"){
+                                // Scroll to comment
+                                $.each(parsedResponse, function(key, val) {
                                         if (val.parentId == '') {
                                             $('.tx_nscomments .thanksmsg').show();
                                             $('html, body').stop().animate({
@@ -114,7 +133,7 @@ function submitComment() {
                             });
                         } else {
                             try {
-                                data = JSON.parse(response);
+                                data = nsCommentsParseResponse(response);
                                 if(data.status == 'success') {
                                     $('.tx_nscomments .approve').show();
                                     $('html, body').stop().animate({
@@ -145,11 +164,8 @@ function submitComment() {
                         addForm();
                     },
                 });
-                event.preventDefault();
-            } else {
-                return false;
-            }
         }
+        return false;
     });
 
     // Reply form

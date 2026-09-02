@@ -17,17 +17,6 @@ plugin.tx_nscomments {
     }
 }
 
-page {
-    includeCSS {
-        nscomment_StyleCss = EXT:ns_comments/Resources/Public/css/style.css
-        nscomment_FontAwesomeCss = EXT:ns_comments/Resources/Public/css/font-awesome.min.css
-    }
-    includeJSFooter {
-        nscomment_Minjs = EXT:ns_comments/Resources/Public/js/jquery-3.6.0.min.js
-        nscomment_CustomJS = EXT:ns_comments/Resources/Public/js/custom.js
-    }
-}
-
 commentAjaxCall = PAGE
 commentAjaxCall {
     typeNum = 991

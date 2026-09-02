@@ -1,8 +1,12 @@
 (function initNsComments() {
+    if (window.nsCommentsInitialized) {
+        return;
+    }
     if (typeof jQuery === 'undefined') {
         window.setTimeout(initNsComments, 50);
         return;
     }
+    window.nsCommentsInitialized = true;
 
     jQuery(function($) {
         submitComment();
@@ -58,7 +62,8 @@ function hidepopup()
 }
 
 function replyComment() {
-    $(document).on("click", '.comment-btn.reply', function(event) {
+    $(document).off("click.nsComments", '.tx_nscomments .comment-btn.reply');
+    $(document).on("click.nsComments", '.tx_nscomments .comment-btn.reply', function(event) {
         var parentCommentId = $(this).parent().attr('id');
         $('#'+ parentCommentId + ' .comment-btn.reply').hide();
     });
@@ -80,7 +85,8 @@ function hashValue() {
 function submitComment() {
 
     // Submit comment
-    $(document).on('submit', '.tx_nscomments #comment-form', function(event) {
+    $(document).off('submit.nsComments', '.tx_nscomments #comment-form');
+    $(document).on('submit.nsComments', '.tx_nscomments #comment-form', function(event) {
         event.preventDefault();
         var captcha = $('.tx_nscomments #captcha').val();
         var ajaxURL = $(this).attr('action');
@@ -169,7 +175,8 @@ function submitComment() {
     });
 
     // Reply form
-    $(document).on("click", '.reply', function(event) {
+    $(document).off("click.nsComments", '.tx_nscomments .reply');
+    $(document).on("click.nsComments", '.tx_nscomments .reply', function(event) {
         var parentCommentId = $(this).parent().attr('id');
         var commentHTML = $('.active-comment-form').html();
         $('.active-comment-form .comment-form')[0].reset();
@@ -191,7 +198,8 @@ function submitComment() {
     });
 
     // Close form
-    $(document).on("click", ".tx_nscomments #comment-form-close-btn", function(event) {
+    $(document).off("click.nsComments", ".tx_nscomments #comment-form-close-btn");
+    $(document).on("click.nsComments", ".tx_nscomments #comment-form-close-btn", function(event) {
         var parentCommentIdClose = $('#parentId').val();;
         $('#'+ parentCommentIdClose + ' .comment-btn.reply').show();
         addForm();

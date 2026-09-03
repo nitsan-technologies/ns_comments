@@ -117,3 +117,9 @@ settings:
     category: ns_comments.configuration.main
     type: bool
     default: true
+
+  ns_comments.configuration.main.approveComment:
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:approveComment
+    category: ns_comments.configuration.main
+    type: bool
+    default: false

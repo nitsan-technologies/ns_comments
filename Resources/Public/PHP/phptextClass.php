@@ -38,7 +38,11 @@ class phptextClass
     {
         /* Settings */
         $text = $this->random();
-        $font = '../../Public/fonts/monofont.ttf'; /* font */
+        // Store before image output so parallel captcha requests keep matching codes
+        $_SESSION['ns_comments_captcha_code'] = $text;
+        session_write_close();
+
+        $font = __DIR__ . '/../fonts/monofont.ttf'; /* font */
         $textColor = $this->hexToRGB($textColor);
         $fontSize = $imgHeight * 0.75;
 
@@ -85,9 +89,6 @@ class phptextClass
         header('Content-Type: image/jpeg'); /* defining the image type to be shown in browser widow */
         imagejpeg($im, null, 90); /* Showing image */
         imagedestroy($im); /* Destroying image instance */
-        if (isset($_SESSION)) {
-            $_SESSION['captcha_code'] = $text; /* set random text in session for captcha validation*/
-        }
     }
 
     /*for random string*/

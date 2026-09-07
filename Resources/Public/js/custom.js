@@ -87,10 +87,9 @@ function submitComment() {
     $(document).off('submit.nsComments', '.tx_nscomments #comment-form');
     $(document).on('submit.nsComments', '.tx_nscomments #comment-form', function(event) {
         event.preventDefault();
-        var captcha = $('.tx_nscomments #captcha').val();
+        var captcha = $('.tx_nscomments #nscomments-captcha').val();
         var ajaxURL = $(this).attr('action');
         var datatype = $('.tx_nscomments #dataType').val();
-        var commentHTML = $('.active-comment-form').html();
         if (validateField()) {
             $.ajax({
                 type: 'POST',
@@ -105,37 +104,34 @@ function submitComment() {
                 success: function(response) {
                     var parsedResponse = nsCommentsParseResponse(response);
                     if ($('.tx_nscomments #approval').val() == 0) {
-                        // GET HTML for comment list
-                        $(".tx_nscomments #comments-list").load(location.href + " .tx_nscomments #comments-list>*", function(responseTxt, statusTxt, jqXHR) {
-                           if(statusTxt == "success"){
-                                // Scroll to comment
-                                $.each(parsedResponse, function(key, val) {
-                                        if (val.parentId == '') {
-                                            $('.tx_nscomments .thanksmsg').show();
-                                            $('html, body').stop().animate({
-                                                scrollTop: ($('.tx_nscomments .thanksmsg').offset().top)
-                                            }, 2000);
-                                            setTimeout(function() {
-                                                $('.tx_nscomments .thanksmsg').fadeOut("slow");
-                                            }, 7000);
-                                        } else {
-
-                                            $('.tx_nscomments .thanksmsg-' + val.parentId).show();
-                                            $('html, body').stop().animate({
-                                                scrollTop: ($('.tx_nscomments .thanksmsg-' + val.parentId).offset().top)
-                                            }, 2000);
-                                            setTimeout(function() {
-                                                $('.tx_nscomments .thanksmsg-' + val.parentId).fadeOut("slow");
-                                            }, 7000);
-                                            $('.tx_nscomments #comments-' + val.parentId).fadeIn('slow');
-                                            $('.tx_nscomments #parentId').val('');
-                                        }
-                                    });
-                                }
-                                if(statusTxt == "error"){
-                                    alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+                        // GET HTML for comment list (strip captcha imgs so AJAX parse does not regenerate sessions)
+                        $.get(location.href, function (html) {
+                            html = String(html).replace(/(<img\b[^>]*\bsrc=["'])[^"']*captcha\.php[^"']*/gi, '$1');
+                            $(".tx_nscomments #comments-list").html($('<div>').append($.parseHTML(html)).find('.tx_nscomments #comments-list').children());
+                            $.each(parsedResponse, function(key, val) {
+                                if (val.parentId == '') {
+                                    $('.tx_nscomments .thanksmsg').show();
+                                    $('html, body').stop().animate({
+                                        scrollTop: ($('.tx_nscomments .thanksmsg').offset().top)
+                                    }, 2000);
+                                    setTimeout(function() {
+                                        $('.tx_nscomments .thanksmsg').fadeOut("slow");
+                                    }, 7000);
+                                } else {
+                                    $('.tx_nscomments .thanksmsg-' + val.parentId).show();
+                                    $('html, body').stop().animate({
+                                        scrollTop: ($('.tx_nscomments .thanksmsg-' + val.parentId).offset().top)
+                                    }, 2000);
+                                    setTimeout(function() {
+                                        $('.tx_nscomments .thanksmsg-' + val.parentId).fadeOut("slow");
+                                    }, 7000);
+                                    $('.tx_nscomments #comments-' + val.parentId).fadeIn('slow');
+                                    $('.tx_nscomments #parentId').val('');
                                 }
                             });
+                        }).fail(function (jqXHR) {
+                            alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+                        });
                         } else {
                             try {
                                 data = nsCommentsParseResponse(response);
@@ -160,13 +156,12 @@ function submitComment() {
                     },
                     complete: function(response) {
                         $('.tx_nscomments #comment-form')[0].reset();
-                        var captcha = document.getElementById("captcha");
-                        if(captcha){
-                            refreshCaptcha();
-                        }
                         $('.tx_nscomments #submit').attr('disabled', false);
                         $('.tx_nscomments #submit').css('cursor', 'pointer');
                         addForm();
+                        if ($('.tx_nscomments #nscomments-captchaimg').length) {
+                            refreshCaptcha();
+                        }
                     },
                 });
         }
@@ -177,10 +172,11 @@ function submitComment() {
     $(document).off("click.nsComments", '.tx_nscomments .reply');
     $(document).on("click.nsComments", '.tx_nscomments .reply', function(event) {
         var parentCommentId = $(this).parent().attr('id');
-        var commentHTML = $('.active-comment-form').html();
-        $('.active-comment-form .comment-form')[0].reset();
-        $('.active-comment-form').html('');
-        $('.active-comment-form').removeClass('active-comment-form');
+        var $active = $('.tx_nscomments .active-comment-form');
+        var commentHTML = $active.html();
+        $active.find('.comment-form')[0].reset();
+        $active.html('');
+        $active.removeClass('active-comment-form');
         $(this).parent().parent().parent().parent().find('#reply-form-' + parentCommentId).append(commentHTML);
         $(this).parent().parent().parent().parent().find('#reply-form-' + parentCommentId).addClass('active-comment-form');
         $('#comment-form-close-btn').show();
@@ -199,7 +195,7 @@ function submitComment() {
     // Close form
     $(document).off("click.nsComments", ".tx_nscomments #comment-form-close-btn");
     $(document).on("click.nsComments", ".tx_nscomments #comment-form-close-btn", function(event) {
-        var parentCommentIdClose = $('#parentId').val();;
+        var parentCommentIdClose = $('.tx_nscomments #parentId').val();
         $('#'+ parentCommentIdClose + ' .comment-btn.reply').show();
         addForm();
     });
@@ -207,9 +203,10 @@ function submitComment() {
 
 // Open form on close button click
 function addForm() {
-    var commentHTML = $('.active-comment-form').html();
-    $('.tx_nscomments .active-comment-form').html('');
-    $('.tx_nscomments .active-comment-form').removeClass('active-comment-form');
+    var $active = $('.tx_nscomments .active-comment-form');
+    var commentHTML = $active.html();
+    $active.html('');
+    $active.removeClass('active-comment-form');
     $('.tx_nscomments #form-comment-view').html(commentHTML);
     $('.tx_nscomments #form-comment-view').addClass('active-comment-form');
     $('.tx_nscomments #comment-form-close-btn').hide();
@@ -232,7 +229,7 @@ function commentError() {
 function validateField() {
     var flag = 1;
     var elementObj;
-    var captcha = document.getElementById("captcha");
+    var captcha = document.getElementById("nscomments-captcha");
     var terms = document.getElementsByName('tx_nscomments_comment[newComment][terms]').length;
 
     if (!$('.tx_nscomments #name').val()) {
@@ -284,18 +281,18 @@ function validateField() {
     }
 
     if(captcha){
-        if (!$('.tx_nscomments #captcha').val()) {
-            $(".tx_nscomments #captcha").parent().addClass('has-error');
-            $(".tx_nscomments #captcha_error").show();
-            $(".tx_nscomments #captcha_valid_error").hide();
+        if (!$('.tx_nscomments #nscomments-captcha').val()) {
+            $(".tx_nscomments #nscomments-captcha").parent().addClass('has-error');
+            $(".tx_nscomments #nscomments-captcha_error").show();
+            $(".tx_nscomments #nscomments-captcha_valid_error").hide();
             var flag = 0;
         } else {
-            if (validateCaptcha($('.tx_nscomments #captcha').val()) == 'true') {
-                $(".tx_nscomments #captcha").parent().removeClass('has-error'); // remove it
+            if (validateCaptcha($('.tx_nscomments #nscomments-captcha').val()) == 'true') {
+                $(".tx_nscomments #nscomments-captcha").parent().removeClass('has-error'); // remove it
             } else {
-                $(".tx_nscomments #captcha_valid_error").show();
-                $(".tx_nscomments #captcha_error").hide();
-                $(".tx_nscomments #captcha").parent().addClass('has-error');
+                $(".tx_nscomments #nscomments-captcha_valid_error").show();
+                $(".tx_nscomments #nscomments-captcha_error").hide();
+                $(".tx_nscomments #nscomments-captcha").parent().addClass('has-error');
                 var flag = 0;
             }
         }
@@ -379,22 +376,22 @@ function onFocusValidation() {
         }
     });
 
-    $(".tx_nscomments #captcha").focusout(function() {
+    $(".tx_nscomments #nscomments-captcha").focusout(function() {
         elementObj = $(this);
         if (elementObj.val() != '') {
-            var length = $.trim($(".tx_nscomments #captcha").val()).length;
+            var length = $.trim($(".tx_nscomments #nscomments-captcha").val()).length;
             if (length == 0) {
-                $(".tx_nscomments #captcha_error").show();
-                $(".tx_nscomments #captcha").parent().addClass('has-error');
+                $(".tx_nscomments #nscomments-captcha_error").show();
+                $(".tx_nscomments #nscomments-captcha").parent().addClass('has-error');
                 var flag = 0;
             } else {
-                $(".tx_nscomments #captcha").parent().removeClass('has-error'); // remove it
-                $(".tx_nscomments #captcha_error").hide();
-                $(".tx_nscomments #captcha_valid_error").hide();
+                $(".tx_nscomments #nscomments-captcha").parent().removeClass('has-error'); // remove it
+                $(".tx_nscomments #nscomments-captcha_error").hide();
+                $(".tx_nscomments #nscomments-captcha_valid_error").hide();
             }
         } else {
-            $(".tx_nscomments #captcha").parent().addClass('has-error');
-            $(".tx_nscomments #captcha_error").show();
+            $(".tx_nscomments #nscomments-captcha").parent().addClass('has-error');
+            $(".tx_nscomments #nscomments-captcha_error").show();
         }
     });
 
@@ -424,16 +421,16 @@ function removeDefaultValidation() {
     $(".tx_nscomments #comment").parent().removeClass('has-error');
     $(".tx_nscomments #comment_error").hide();
 
-    $(".tx_nscomments #captcha").parent().removeClass('has-error');
-    $(".tx_nscomments #captcha_error").hide();
-    $(".tx_nscomments #captcha_valid_error").hide();
+    $(".tx_nscomments #nscomments-captcha").parent().removeClass('has-error');
+    $(".tx_nscomments #nscomments-captcha_error").hide();
+    $(".tx_nscomments #nscomments-captcha_valid_error").hide();
 }
 
 // Validate Captcha field using ajax request
 function validateCaptcha(captcha) {
 
     var dataString = 'captcha=' + captcha;
-    var url = $('.verification').val();
+    var url = $('.tx_nscomments .verification').val();
     var response = $.ajax({
         type: 'POST',
         async: false,
@@ -463,10 +460,15 @@ function validateName($name) {
 
 // Referech Captcha
 function refreshCaptcha() {
-    var img = document.images['captchaimg'];
-    img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
+    var img = document.getElementById('nscomments-captchaimg');
+    if (img) {
+        img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
+    }
 }
 
-    // Keep captcha refresh available for FormFields inline link
-    window.refreshCaptcha = refreshCaptcha;
+    $(document).off('click.nsCommentsCaptcha', '.tx_nscomments .captchaLink');
+    $(document).on('click.nsCommentsCaptcha', '.tx_nscomments .captchaLink', function (event) {
+        event.preventDefault();
+        refreshCaptcha();
+    });
 })();

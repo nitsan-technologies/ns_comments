@@ -6,3 +6,10 @@ services:
 
   Nitsan\NsComments\:
     resource: '../Classes/*'
+
+  Nitsan\NsComments\EventListener\PremiumStripPreview:
+    tags:
+      - name: event.listener
+        identifier: 'ns-comments/premium-strip-preview'
+        event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
+        after: 'typo3-backend/fluid-preview/content'

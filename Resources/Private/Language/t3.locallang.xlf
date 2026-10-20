@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:ns_comments/Resources/Private/Language/locallang.xlf" date="2016-11-08T11:15:02Z" product-name="ns_comments" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="pi1_title" xml:space="preserve">
+				<source>Comment</source>
+			<target>crwdns415263:0crwdne415263:0</target></trans-unit>
+      <trans-unit id="backend.dateformate" xml:space="preserve">
+				<source>Date Formate</source>
+			<target>crwdns415265:0crwdne415265:0</target></trans-unit>
+      <trans-unit id="backend.timeformate" xml:space="preserve">
+				<source>Time Formate</source>
+			<target>crwdns415267:0crwdne415267:0</target></trans-unit>
+      <trans-unit id="backend.Image" xml:space="preserve">
+				<source>Comment User Image</source>
+			<target>crwdns415269:0crwdne415269:0</target></trans-unit>
+      <trans-unit id="backend.captcha" xml:space="preserve">
+				<source>Disable Captcha</source>
+			<target>crwdns415271:0crwdne415271:0</target></trans-unit>
+      <trans-unit id="backend.userSettings.1" xml:space="preserve">
+				<source>FE-user as well as the Anonymous user can comment on the page</source>
+			<target>crwdns415273:0crwdne415273:0</target></trans-unit>
+      <trans-unit id="backend.userSettings.2" xml:space="preserve">
+				<source>Only FE-users can comment on page</source>
+			<target>crwdns415275:0crwdne415275:0</target></trans-unit>
+      <trans-unit id="backend.feUserloginpid" xml:space="preserve">
+				<source>FE-user login page Id</source>
+			<target>crwdns415277:0crwdne415277:0</target></trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment">
+        <source>Comment</source>
+        <target>crwdns415279:0crwdne415279:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.pageuid">
+        <source>Pageuid</source>
+        <target>crwdns415281:0crwdne415281:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.username">
+        <source>Name</source>
+        <target>crwdns415283:0crwdne415283:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.usermail">
+        <source>Email</source>
+        <target>crwdns415285:0crwdne415285:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.approvedmessage">
+        <source>Comment approved successfully. Reload the page to see the comment.</source>
+        <target>crwdns415287:0crwdne415287:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.unapprovedmessage">
+        <source>Either comment is already approved or invalid access token.</source>
+        <target>crwdns415289:0crwdne415289:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.comment">
+        <source>Comment</source>
+        <target>crwdns415291:0crwdne415291:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.lblcomments">
+        <source>Comments</source>
+        <target>crwdns415293:0crwdne415293:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.name">
+        <source>Name</source>
+        <target>crwdns415295:0crwdne415295:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.email">
+        <source>Email</source>
+        <target>crwdns415297:0crwdne415297:0</target>
+      </trans-unit>
+      <trans-unit id="email">
+        <source>Please enter your valid email address</source>
+        <target>crwdns415299:0crwdne415299:0</target>
+      </trans-unit>
+      <trans-unit id="email_required">
+        <source>Valid email is required!</source>
+        <target>crwdns415301:0crwdne415301:0</target>
+      </trans-unit>
+      <trans-unit id="name">
+        <source>Please enter your name</source>
+        <target>crwdns415303:0crwdne415303:0</target>
+      </trans-unit>
+      <trans-unit id="name_required">
+        <source>Name is required!</source>
+        <target>crwdns415305:0crwdne415305:0</target>
+      </trans-unit>
+      <trans-unit id="comment">
+        <source>Please enter your comment</source>
+        <target>crwdns415307:0crwdne415307:0</target>
+      </trans-unit>
+      <trans-unit id="comment_required">
+        <source>Comment is required!</source>
+        <target>crwdns415309:0crwdne415309:0</target>
+      </trans-unit>
+      <trans-unit id="captcha">
+        <source>Enter the above code here</source>
+        <target>crwdns415311:0crwdne415311:0</target>
+      </trans-unit>
+      <trans-unit id="captcha_required">
+        <source>Captcha is required!</source>
+        <target>crwdns415313:0crwdne415313:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.captcha">
+        <source>Enter the above code here</source>
+        <target>crwdns415315:0crwdne415315:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.replylabel">
+        <source>Reply</source>
+        <target>crwdns415317:0crwdne415317:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.nocommentsfound">
+        <source>Be the First to Comment</source>
+        <target>crwdns415319:0crwdne415319:0</target>
+      </trans-unit>
+      <trans-unit id="at">
+        <source>At</source>
+        <target>crwdns415321:0crwdne415321:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.mailmessage">
+        <source>New Comment is added on page</source>
+        <target>crwdns415323:0crwdne415323:0</target>
+      </trans-unit>
+      <trans-unit id="form.submitButton">
+        <source>Post comment</source>
+        <target>crwdns415325:0crwdne415325:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.pageTitle">
+        <source>Seite</source>
+        <target>crwdns415327:0crwdne415327:0</target>
+      </trans-unit>
+      <trans-unit id="mandatory">
+        <source>These fields are required.</source>
+        <target>crwdns415329:0crwdne415329:0</target>
+      </trans-unit>
+      <trans-unit id="replytext">
+        <source>Reply to comment</source>
+        <target>crwdns415331:0crwdne415331:0</target>
+      </trans-unit>
+      <trans-unit id="form.emailError">
+        <source>Enter valid email address</source>
+        <target>crwdns415333:0crwdne415333:0</target>
+      </trans-unit>
+      <trans-unit id="form.nameError">
+        <source>Enter valid name</source>
+        <target>crwdns415335:0crwdne415335:0</target>
+      </trans-unit>
+      <trans-unit id="form.captchaValidationError">
+        <source>Code does not match!</source>
+        <target>crwdns415337:0crwdne415337:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.validationMessage">
+        <source>Code does not match</source>
+        <target>crwdns415339:0crwdne415339:0</target>
+      </trans-unit>
+      <trans-unit id="form.captchaRefresh">
+        <source>Can't read the image? </source>
+        <target>crwdns415341:0crwdne415341:0</target>
+      </trans-unit>
+      <trans-unit id="form.captchaRefreshButton">
+        <source>Click here to refresh</source>
+        <target>crwdns415343:0crwdne415343:0</target>
+      </trans-unit>
+      <trans-unit id="form.approveMessage">
+        <source>Thank you for your comment. Your Comment Will Be Visible After Approval.</source>
+        <target>crwdns415345:0crwdne415345:0</target>
+      </trans-unit>
+      <trans-unit id="form.approveerrorMessage">
+        <source>Oops! Something went wrong, please try again later.</source>
+        <target>crwdns415347:0crwdne415347:0</target>
+      </trans-unit>
+      <trans-unit id="form.thankyouMessage">
+        <source>Thank you for your comment. Your Comment Added Successfully.</source>
+        <target>crwdns415349:0crwdne415349:0</target>
+      </trans-unit>
+      <trans-unit id="tx_nscomments_domain_model_comment.errorMessage">
+        <source>No Entry Found</source>
+        <target>crwdns415351:0crwdne415351:0</target>
+      </trans-unit>
+      <trans-unit id="CommentsandResponses">
+        <source>Comments and Responses</source>
+        <target>crwdns415353:0crwdne415353:0</target>
+      </trans-unit>
+      <trans-unit id="pagefelogin">
+        <source>Click here</source>
+        <target>crwdns415355:0crwdne415355:0</target>
+      </trans-unit>
+      <trans-unit id="pagefeloginmsg">
+        <source>to login and add your comments.</source>
+        <target>crwdns415357:0crwdne415357:0</target>
+      </trans-unit>
+      <trans-unit id="commentas">
+        <source>Comment will be added as</source>
+        <target>crwdns415359:0crwdne415359:0</target>
+      </trans-unit>
+      <trans-unit id="confirm1">
+        <source>Currently, this comment is not displayed on the page.</source>
+        <target>crwdns415361:0crwdne415361:0</target>
+      </trans-unit>
+      <trans-unit id="confirm2">
+        <source>Click Here</source>
+        <target>crwdns415363:0crwdne415363:0</target>
+      </trans-unit>
+      <trans-unit id="confirm3">
+        <source>to display this comment on the page.</source>
+        <target>crwdns415365:0crwdne415365:0</target>
+      </trans-unit>
+      <trans-unit id="form.termsError">
+        <source>Please accept</source>
+        <target>crwdns415367:0crwdne415367:0</target>
+      </trans-unit>
+      <trans-unit id="terms_required">
+        <source>Terms is required!</source>
+        <target>crwdns415369:0crwdne415369:0</target>
+      </trans-unit>
+      <trans-unit id="terms.label">
+        <source>Terms</source>
+        <target>crwdns415371:0crwdne415371:0</target>
+      </trans-unit>
+      <trans-unit id="terms.text">
+        <source><![CDATA[I accept the <a href="%s" target="_blank">terms</a>.]]></source>
+        <target><![CDATA[crwdns415373:0%scrwdne415373:0]]></target>
+      </trans-unit>
+      <trans-unit id="close">
+        <source>Close</source>
+        <target>crwdns415375:0crwdne415375:0</target>
+      </trans-unit>
+      <trans-unit id="terms.link">
+        <source><![CDATA[<a href="%s" target="_blank">terms</a>]]></source>
+        <target><![CDATA[crwdns415377:0%scrwdne415377:0]]></target>
+      </trans-unit>
+      <trans-unit id="premium.strip.headline" xml:space="preserve">
+				<source>You're using the free version of NS Comments</source>
+			<target>crwdns415379:0crwdne415379:0</target></trans-unit>
+      <trans-unit id="premium.strip.description" xml:space="preserve">
+				<source>Unlock premium features and get more out of NS Comments.</source>
+			<target>crwdns415381:0crwdne415381:0</target></trans-unit>
+      <trans-unit id="premium.strip.trial" xml:space="preserve">
+				<source>Start Free Trial</source>
+			<target>crwdns415383:0crwdne415383:0</target></trans-unit>
+    </body>
+  </file>
+</xliff>

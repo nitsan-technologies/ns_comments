@@ -101,13 +101,15 @@ settings:
   ##################################################
 
   ns_comments.configuration.main.customDateFormat:
-    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customDateFormat
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat
+    description: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.dateFormat.description
     category: ns_comments.configuration.main
     type: string
     default: F j, Y
 
   ns_comments.configuration.main.customTimeFormat:
-    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:customTimeFormat
+    label: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.timeFormat
+    description: LLL:EXT:ns_comments/Resources/Private/Language/locallang_db.xlf:flexform.timeFormat.description
     category: ns_comments.configuration.main
     type: string
     default: g:i a

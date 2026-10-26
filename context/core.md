@@ -17,11 +17,11 @@
 
 | Source | TYPO3 | PHP |
 |---|---|---|
-| `ext_emconf.php` | `12.0.0-14.9.99` | not declared |
-| `composer.json` | `^12 \|\| ^13 \|\| ^14` | not declared |
+| `ext_emconf.php` | `12.0.0-14.9.99` | `8.1.0-8.5.99` |
+| `composer.json` | `^12 \|\| ^13 \|\| ^14` | `>=8.1 <8.6` |
 | ns_license 14.5.4 (dependency) | `12.4.18-14.9.99` | not declared (TYPO3 12.4 needs 8.1+) |
 
-- Effective minimum is **TYPO3 12.4.18** (from ns_license) and **PHP 8.1**.
+- Effective range is **TYPO3 12.4.18** (from ns_license) and **PHP 8.1–8.5**. TYPO3 12 itself is only official on 8.1–8.4; 8.5 is for TYPO3 13/14. Captcha no longer calls `imagedestroy()` (deprecated in 8.5).
 
 ## Dependencies
 

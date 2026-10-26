@@ -9,6 +9,8 @@ plugin.tx_nscomments {
         termsText = {$plugin.tx_nscomments.settings.termsText}
         termsTypolinkParameter = {$plugin.tx_nscomments.settings.termsTypolinkParameter}
         approveComment = {$plugin.tx_nscomments.settings.approveComment}
+        dateFormat = {$plugin.tx_nscomments.settings.dateFormat}
+        timeFormat = {$plugin.tx_nscomments.settings.timeFormat}
         mainConfiguration {
             customDateFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customDateFormat}
             customTimeFormat = {$plugin.tx_nscomments.settings.mainConfiguration.customTimeFormat}

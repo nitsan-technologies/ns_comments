@@ -32,6 +32,7 @@ use Nitsan\NsComments\Domain\Repository\CommentRepository;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -90,15 +91,20 @@ class CommentController extends ActionController
         $relatedComments = $setting['relatedComments'];
 
         if ($relatedComments) {
-            $setting['custom'] = false;
-            $setting['dateFormat'] = $setting['mainConfiguration']['customDateFormat'] ?? '';
-            $setting['timeFormat'] = $setting['mainConfiguration']['customTimeFormat'] ?? '';
+            $setting['dateFormat'] = ($setting['dateFormat'] ?? '')
+                ?: ($setting['mainConfiguration']['customDateFormat'] ?? 'F j, Y');
+            $setting['timeFormat'] = ($setting['timeFormat'] ?? '')
+                ?: ($setting['mainConfiguration']['customTimeFormat'] ?? 'g:i a');
             $setting['captcha'] = $setting['mainConfiguration']['disableCaptcha'] ?? '';
 
             // Check if 'userImage' exists before assigning it to $image
             $image = $setting['mainConfiguration']['userImage'] ?? null;
 
             $this->view->assign('relatedComments', true);
+        }
+
+        if ((string)($setting['global'] ?? '') === '1') {
+            $setting = array_merge($setting, $this->getGlobalDateTimeFormats());
         }
 
         $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
@@ -176,6 +182,34 @@ class CommentController extends ActionController
         $json[$newComment->getUid()] = ['parentId' => $parentId, 'comment' => 'comment'];
         return $this->jsonResponse(json_encode($json));
 
+    }
+
+    /**
+     * Site settings are used when the site defines them (Site Set or settings.yaml), otherwise
+     * TypoScript, e.g. on TYPO3 v12. TypoScript is read directly because FlexForm values
+     * override the plugin settings.
+     *
+     * @return array{dateFormat: string, timeFormat: string}
+     */
+    private function getGlobalDateTimeFormats(): array
+    {
+        $site = $this->request->getAttribute('site');
+        $siteSettings = $site instanceof Site ? $site->getSettings() : null;
+        $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $typoScriptSettings = $typoScript['plugin.']['tx_nscomments.']['settings.'] ?? [];
+        $mainConfiguration = $typoScriptSettings['mainConfiguration.'] ?? [];
+
+        $formats = [];
+        foreach (['dateFormat' => 'F j, Y', 'timeFormat' => 'g:i a'] as $format => $default) {
+            $customKey = 'custom' . ucfirst($format);
+            $siteSetting = 'ns_comments.configuration.main.' . $customKey;
+            $value = $siteSettings?->has($siteSetting)
+                ? $siteSettings->get($siteSetting)
+                : ($typoScriptSettings[$format] ?? $mainConfiguration[$customKey] ?? '');
+            $formats[$format] = trim(is_scalar($value) ? (string)$value : '') ?: $default;
+        }
+
+        return $formats;
     }
 
     /**

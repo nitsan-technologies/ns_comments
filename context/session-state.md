@@ -1,5 +1,11 @@
 # ns_comments — Session state
 
+## 2026-10-26 — PHP 8.5 compatibility
+
+- Declared PHP `8.1.0-8.5.99` / `>=8.1 <8.6` in `ext_emconf.php` and `composer.json`.
+- Removed `imagedestroy()` from captcha `phptextClass.php` (deprecated in 8.5, no-op since 8.0).
+- Lint clean on PHP 8.1 and 8.5; captcha generation emits no 8.5 deprecation. Not tested live in the browser.
+
 ## 2026-10-15 — ns_license integration + premium strip + agent context
 
 - Branch `feature/ns-license-premium-strip` from `master` (8a248f5).

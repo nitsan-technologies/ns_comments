@@ -3,7 +3,7 @@
 The repo has no PHPUnit, PHPStan or CS config. Available checks:
 
 ```bash
-# PHP syntax; also run once with PHP 8.1, the lowest version TYPO3 12 supports
+# PHP syntax; run with PHP 8.1 (lowest, TYPO3 12) and PHP 8.5 (highest declared)
 for f in $(find . -name "*.php" -not -path "./.git/*" -not -path "./.Build/*"); do php -l "$f"; done
 
 # composer.json

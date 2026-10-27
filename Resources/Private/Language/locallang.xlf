@@ -178,10 +178,10 @@
 				<source><![CDATA[<a href="%s" target="_blank">terms</a>]]></source>
 			</trans-unit>
 			<trans-unit id="premium.strip.headline" xml:space="preserve">
-				<source>You're using the free version of NS Comments</source>
+				<source>You're using the free version of Comments</source>
 			</trans-unit>
 			<trans-unit id="premium.strip.description" xml:space="preserve">
-				<source>Unlock premium features and get more out of NS Comments.</source>
+				<source>Unlock premium features and get more out of Comments.</source>
 			</trans-unit>
 			<trans-unit id="premium.strip.trial" xml:space="preserve">
 				<source>Start Free Trial</source>

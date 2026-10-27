@@ -163,6 +163,14 @@
 				<source>Date Format</source>
 				<target>Datumsformat</target>
 			</trans-unit>
+			<trans-unit id="flexform.dateFormat.description">
+				<source>PHP date() format, e.g. F j, Y or j. F Y</source>
+				<target>PHP date()-Format, z. B. F j, Y oder j. F Y</target>
+			</trans-unit>
+			<trans-unit id="flexform.dateFormat.constant">
+				<source>Date Format: PHP date() format, e.g. F j, Y or j. F Y</source>
+				<target>Datumsformat: PHP date()-Format, z. B. F j, Y oder j. F Y</target>
+			</trans-unit>
 			<trans-unit id="flexform.dateFormat.0">
 				<source>F j, Y (May 26, 2017)</source>
 				<target>F j, Y (26. Mai 2017)</target>
@@ -194,6 +202,18 @@
 			<trans-unit id="flexform.timeFormat">
 				<source>Time Format</source>
 				<target>Zeitformat</target>
+			</trans-unit>
+			<trans-unit id="flexform.timeFormat.description">
+				<source>PHP date() format, e.g. g:i a, g:i A or H:i</source>
+				<target>PHP date()-Format, z. B. g:i a, g:i A oder H:i</target>
+			</trans-unit>
+			<trans-unit id="flexform.timeFormat.constant">
+				<source>Time Format: PHP date() format, e.g. g:i a, g:i A or H:i</source>
+				<target>Zeitformat: PHP date()-Format, z. B. g:i a, g:i A oder H:i</target>
+			</trans-unit>
+			<trans-unit id="globalDateTimeFormat">
+				<source>Use global date and time format (site settings or TypoScript)</source>
+				<target>Globales Datum- und Zeitformat verwenden (Website-Einstellungen oder TypoScript)</target>
 			</trans-unit>
 			<trans-unit id="flexform.custom">
 				<source>Custom Date Format</source>

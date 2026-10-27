@@ -12,7 +12,7 @@ The extension declares TYPO3 v12–v14 (Composer and Classic mode), see `core.md
   `CommentController`, `enum_exists(IconSize::class)` in `PremiumStrip`, the constructor/`setData()` pair in
   the FormEngine resolver, `getRecordType()` vs. the row's `CType` in the preview listener) instead of inventing
   new ones.
-- Lowest PHP is 8.1 (TYPO3 12): no PHP 8.2+ syntax such as `readonly` classes or DNF types.
+- Lowest PHP is 8.1 (TYPO3 12): no PHP 8.2+ syntax such as `readonly` classes or DNF types. Highest declared PHP is 8.5.
 - Both configuration paths must keep working: the classic static template (`plugin.tx_nscomments.*` constants)
   and the site set `nitsan/ns-comments` (`ns_comments.*` settings). A change to one usually needs the same
   change in the other.

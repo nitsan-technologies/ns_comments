@@ -60,24 +60,18 @@ class CommentController extends ActionController
      */
     public function initializeAction(): void
     {
-        // Storage page configuration
+        // Storage page: use TypoScript/plugin persistence, else current page (same as previous
+        // form Storagepid = page id). Never take storage PID from the request.
         $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $_REQUEST['tx_nscomments_comment']['comments-storage-pid'] ??= '';
-        if ($_REQUEST['tx_nscomments_comment']['comments-storage-pid']) {
-            $currentPid['persistence']['storagePid'] = $this->request->getParsedBody()['id'];
-            $this->configurationManager->setConfiguration(array_merge($extbaseFrameworkConfiguration, $currentPid));
-        } else {
-            if (empty($extbaseFrameworkConfiguration['persistence']['storagePid'])) {
-                if ($_REQUEST['tx_nscomments_comment']) {
-                    $_REQUEST['tx_nscomments_comment']['Storagepid'] ??= '';
-                    $currentPid['persistence']['storagePid'] = $_REQUEST['tx_nscomments_comment']['Storagepid'];
-                } else {
-                    $currentPid['persistence']['storagePid'] = $this->request->getParsedBody()['id'];
-                }
-                $this->configurationManager->setConfiguration(array_merge($extbaseFrameworkConfiguration, $currentPid));
+        if (empty($extbaseFrameworkConfiguration['persistence']['storagePid'])) {
+            $storagePid = $this->getCurrentPageId();
+            if ($storagePid > 0) {
+                $extbaseFrameworkConfiguration['persistence']['storagePid'] = (string)$storagePid;
+                $this->configurationManager->setConfiguration($extbaseFrameworkConfiguration);
             }
         }
     }
+
 
     /**
      * action list
@@ -107,19 +101,13 @@ class CommentController extends ActionController
             $setting = array_merge($setting, $this->getGlobalDateTimeFormats());
         }
 
-        $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
-        if ($versionNumber['version_main'] <= 12) {
-            // @extensionScannerIgnoreLine
-            $pid = $pageUid = $GLOBALS['TSFE']->id;
-        } else {
-            $pid = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information')->getId();
-        }
+        $pid = $this->getCurrentPageId();
 
         if ($pid) {
             $comments = $this->commentRepository->getCommentsByPage($pid)->toArray();
             $paths = $this->captchaVerificationPath();
 
-            $captcha_path = $paths['captcha'] . '?' . rand();
+            $captcha_path = $paths['captcha'] . '?' . random_int(0, mt_getrandmax());
             $image ??= '';
             $this->view->assignMultiple([
                 'captcha_path' => $captcha_path,
@@ -145,28 +133,41 @@ class CommentController extends ActionController
      */
     public function createAction(?Comment $newComment = null): ResponseInterface
     {
+
         // If no form data was submitted (e.g. direct GET access by bots/crawlers), redirect
         if ($newComment === null) {
             return $this->redirect('list');
         }
 
-        $versionNumber =  VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
-        if ($versionNumber['version_main'] <= 12) {
-            // @extensionScannerIgnoreLine
-            $pageUid = $GLOBALS['TSFE']->id;
-        } else {
-            $pageUid = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information')->getId();
+        if ($this->isCaptchaEnabled() && !$this->isSubmittedCaptchaValid()) {
+            return $this->jsonResponse(json_encode(['status' => 'error', 'message' => 'captcha']));
         }
 
+        $pageUid = $this->getCurrentPageId();
+
         $request = $this->request->getArguments();
+        // Ignore request-controlled internals (mass-assignment hardening). Trusted form fields
+        // still map username/usermail/description/terms; everything sensitive is reset here.
         $newComment->setCrdate(time());
+        $newComment->setPageuid($pageUid);
+        $newComment->setHidden(0);
+        $newComment->setAccesstoken('');
+        $newComment->setFeuserid(0);
+        $newComment->setUserimage('');
+        $newComment->setParamlink('');
+        $newComment->setCaptcha('');
         $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id');
         $newComment->set_languageUid($languageId);
-        $parentId = $request['parentId'];
-        if ($request['parentId'] > 0) {
-            $childComment = $this->commentRepository->findByUid($parentId);
-            $childComment->addChildcomment($newComment);
-            $this->commentRepository->update($childComment);
+
+        $parentId = (int)($request['parentId'] ?? 0);
+        if ($parentId > 0) {
+            $parentComment = $this->commentRepository->findByUid($parentId);
+            if ($parentComment instanceof Comment && $parentComment->getPageuid() === $pageUid) {
+                $parentComment->addChildcomment($newComment);
+                $this->commentRepository->update($parentComment);
+            } else {
+                $parentId = 0;
+            }
         }
 
         // Add comment to repository
@@ -182,6 +183,68 @@ class CommentController extends ActionController
         $json[$newComment->getUid()] = ['parentId' => $parentId, 'comment' => 'comment'];
         return $this->jsonResponse(json_encode($json));
 
+    }
+
+    /**
+     * Captcha is shown when settings.captcha == 0 (FlexForm), or for relatedComments when
+     * mainConfiguration.disableCaptcha is not enabled.
+     *
+     * typeNum=991 create often has no FlexForm settings, so also treat a posted captcha_code
+     * field (present only when the form rendered the captcha) as captcha-enabled.
+     */
+    private function isCaptchaEnabled(): bool
+    {
+        if (!empty($this->settings['relatedComments'])) {
+            return (int)($this->settings['mainConfiguration']['disableCaptcha'] ?? 0) === 0;
+        }
+        if (array_key_exists('captcha', $this->settings)) {
+            return (int)$this->settings['captcha'] === 0;
+        }
+        return array_key_exists('captcha_code', $this->request->getArguments());
+    }
+
+    /**
+     * Validate against the captcha session written by Resources/Public/PHP/captcha.php.
+     */
+    private function isSubmittedCaptchaValid(): bool
+    {
+        $submitted = trim((string)($this->request->getArguments()['captcha_code'] ?? ''));
+        if ($submitted === '') {
+            return false;
+        }
+
+        $previousName = session_name();
+        $hadSession = session_status() === PHP_SESSION_ACTIVE;
+        if ($hadSession) {
+            session_write_close();
+        }
+
+        session_name('ns_comments_captcha');
+        session_start();
+        $expected = (string)($_SESSION['ns_comments_captcha_code'] ?? '');
+        $valid = $expected !== '' && hash_equals($expected, $submitted);
+        if ($valid) {
+            unset($_SESSION['ns_comments_captcha_code']);
+        }
+        session_write_close();
+
+        if ($hadSession) {
+            session_name($previousName);
+            session_start();
+        }
+
+        return $valid;
+    }
+
+    private function getCurrentPageId(): int
+    {
+        $versionNumber = VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version());
+        if ($versionNumber['version_main'] <= 12) {
+            // @extensionScannerIgnoreLine
+            return (int)($GLOBALS['TSFE']->id ?? 0);
+        }
+        $pageInformation = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information');
+        return $pageInformation ? (int)$pageInformation->getId() : 0;
     }
 
     /**

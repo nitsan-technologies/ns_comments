@@ -114,6 +114,8 @@
 <f:form.hidden name="parentId" id="parentId" value=""/>
 <f:form.hidden name="approval" id="approval" value="{settings.approveComment}"/>
 <f:form.hidden name="dataType" id="dataType" value="{f:if(condition:settings.approveComment,then:'html',else:'json')}" />
+<f:form.hidden name="captchaMode" value="{captchaMode}"/>
+<f:form.hidden name="captchaModeHmac" value="{captchaModeHmac}"/>
 <f:if condition="{relatedComments}">
     <f:form.hidden name="comments-storage-pid" id="comments-storage-pid" value="{settings.mainConfiguration.recordStoragePage}"/>
 </f:if>

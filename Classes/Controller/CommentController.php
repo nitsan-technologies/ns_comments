@@ -32,6 +32,7 @@ use Nitsan\NsComments\Domain\Repository\CommentRepository;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -48,9 +49,12 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
  */
 class CommentController extends ActionController
 {
+    private const CAPTCHA_MODE_HMAC_SECRET = 'nsCommentsCaptchaMode';
+
     public function __construct(
-        protected CommentRepository  $commentRepository,
+        protected CommentRepository $commentRepository,
         protected PersistenceManager $persistenceManager,
+        protected HashService $hashService,
     ) {}
 
     /**
@@ -109,6 +113,7 @@ class CommentController extends ActionController
 
             $captcha_path = $paths['captcha'] . '?' . random_int(0, mt_getrandmax());
             $image ??= '';
+            $captchaMode = $this->resolveCaptchaModeFromSettings($setting);
             $this->view->assignMultiple([
                 'captcha_path' => $captcha_path,
                 'verification' => $paths['verification'],
@@ -116,6 +121,11 @@ class CommentController extends ActionController
                 'Image' => $image,
                 'pid' => $pid,
                 'settings' => $setting,
+                'captchaMode' => $captchaMode,
+                'captchaModeHmac' => $this->hashService->hmac(
+                    $this->buildCaptchaModePayload($pid, $captchaMode),
+                    self::CAPTCHA_MODE_HMAC_SECRET
+                ),
             ]);
         } else {
             $error = LocalizationUtility::translate('tx_nscomments_domain_model_comment.errorMessage', 'NsComments');
@@ -189,18 +199,52 @@ class CommentController extends ActionController
      * Captcha is shown when settings.captcha == 0 (FlexForm), or for relatedComments when
      * mainConfiguration.disableCaptcha is not enabled.
      *
-     * typeNum=991 create often has no FlexForm settings, so also treat a posted captcha_code
-     * field (present only when the form rendered the captcha) as captcha-enabled.
+     * typeNum=991 create often has no FlexForm settings. Captcha on/off is carried by an
+     * HMAC-signed captchaMode from the list form — never by "is captcha_code present?".
+     * Unknown / invalid → fail closed (captcha required).
      */
     private function isCaptchaEnabled(): bool
     {
         if (!empty($this->settings['relatedComments'])) {
             return (int)($this->settings['mainConfiguration']['disableCaptcha'] ?? 0) === 0;
         }
-        if (array_key_exists('captcha', $this->settings)) {
+        if (array_key_exists('captcha', $this->settings)
+            && $this->settings['captcha'] !== ''
+            && $this->settings['captcha'] !== null
+        ) {
             return (int)$this->settings['captcha'] === 0;
         }
-        return array_key_exists('captcha_code', $this->request->getArguments());
+
+        $arguments = $this->request->getArguments();
+        $captchaMode = (string)($arguments['captchaMode'] ?? '');
+        $captchaModeHmac = (string)($arguments['captchaModeHmac'] ?? '');
+        if (($captchaMode === '0' || $captchaMode === '1') && $captchaModeHmac !== '') {
+            $payload = $this->buildCaptchaModePayload($this->getCurrentPageId(), $captchaMode);
+            if ($this->hashService->validateHmac($payload, self::CAPTCHA_MODE_HMAC_SECRET, $captchaModeHmac)) {
+                return $captchaMode === '0';
+            }
+        }
+
+        // Fail closed: require captcha when mode is unknown or HMAC is invalid.
+        return true;
+    }
+
+    /**
+     * Effective captcha mode for the rendered form: '0' = captcha on, '1' = captcha off.
+     *
+     * @param array<string, mixed> $setting
+     */
+    private function resolveCaptchaModeFromSettings(array $setting): string
+    {
+        if (!empty($setting['relatedComments'])) {
+            return (int)($setting['mainConfiguration']['disableCaptcha'] ?? 0) === 0 ? '0' : '1';
+        }
+        return (string)(int)($setting['captcha'] ?? 1);
+    }
+
+    private function buildCaptchaModePayload(int $pageUid, string $captchaMode): string
+    {
+        return $pageUid . '|' . $captchaMode;
     }
 
     /**
@@ -340,7 +384,8 @@ class CommentController extends ActionController
         $paths = [];
         if (Environment::isComposerMode()) {
             $assetPath = $this->getPath('PHP/', 'ns_comments');
-            $basePath = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
+            $normalizedParams = $this->request->getAttribute('normalizedParams');
+            $basePath = $normalizedParams->getSiteUrl();
             $paths['captcha'] = $basePath . $assetPath . 'captcha.php';
             $paths['verification'] = $basePath . $assetPath . 'verify.php';
         } else {
